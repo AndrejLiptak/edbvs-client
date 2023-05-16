@@ -63,6 +63,8 @@ export function SidebarUnified({  addToList,  all, circuitBreakers, RCDs, surgeP
           minHeight: '400px',
           display: 'flex',
           flexDirection: 'column',
+         
+          flexGrow: 1
           
         }}
       >

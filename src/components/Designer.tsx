@@ -24,13 +24,13 @@ function Designer() {
   const [surgeProtectors] = useSurgeProtectorsQuery();
   const [PLCs] = usePlCsQuery();
 
-//  if (
- //   devices.fetching ||
+  //  if (
+  //   devices.fetching ||
   //  circuitBreakers.fetching ||
-   // RCDs.fetching ||
-    //surgeProtectors.fetching ||
-    //PLCs.fetching
- // )
+  // RCDs.fetching ||
+  //surgeProtectors.fetching ||
+  //PLCs.fetching
+  // )
   //  return <CircularProgress className="CircularProgress" />;
 
   function addToList(device: IDevice) {
@@ -54,11 +54,11 @@ function Designer() {
     setDeviceList(newDeviceList);
   }
   const allDevices = [
-    ...circuitBreakers.data?.CircuitBreakers! ?? [],
-    ...RCDs.data?.RCDs! ?? [],
-    ...surgeProtectors.data?.SurgeProtectors! ?? [],
-    ...PLCs.data?.PLCs! ?? [],
-    ...devices.data?.GenericDevices! ?? [],
+    ...(circuitBreakers.data?.CircuitBreakers! ?? []),
+    ...(RCDs.data?.RCDs! ?? []),
+    ...(surgeProtectors.data?.SurgeProtectors! ?? []),
+    ...(PLCs.data?.PLCs! ?? []),
+    ...(devices.data?.GenericDevices! ?? []),
   ];
   return (
     <>
@@ -69,24 +69,27 @@ function Designer() {
             display: "flex",
             height: "100%",
             width: "100%",
-            
-            
-            
           }}
         >
           <SidebarUnified
             addToList={addToList}
             circuitBreakers={circuitBreakers.data?.CircuitBreakers! ?? []}
             RCDs={RCDs.data?.RCDs! ?? []}
-            surgeProtectors={surgeProtectors.data?.SurgeProtectors.sort((x, y) => {
-              return Number(y.isVerified) - Number(x.isVerified);
-            })! ?? []}
-            PLCs={PLCs.data?.PLCs.sort((x, y) => {
-              return Number(y.isVerified) - Number(x.isVerified);
-            })! ?? []}
-            genericDevices={devices.data?.GenericDevices.sort((x, y) => {
-              return Number(y.isVerified) - Number(x.isVerified);
-            })! ?? []}
+            surgeProtectors={
+              surgeProtectors.data?.SurgeProtectors.sort((x, y) => {
+                return Number(y.isVerified) - Number(x.isVerified);
+              })! ?? []
+            }
+            PLCs={
+              PLCs.data?.PLCs.sort((x, y) => {
+                return Number(y.isVerified) - Number(x.isVerified);
+              })! ?? []
+            }
+            genericDevices={
+              devices.data?.GenericDevices.sort((x, y) => {
+                return Number(y.isVerified) - Number(x.isVerified);
+              })! ?? []
+            }
             all={allDevices}
           />
           <Diagram
