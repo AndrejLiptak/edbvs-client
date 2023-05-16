@@ -41,7 +41,16 @@ export function SidebarUnified({  addToList,  all, circuitBreakers, RCDs, surgeP
 
 
   return (
-    <>
+    <div style={{          width: '25%',
+    minWidth: '250px',
+    maxWidth: '400px',
+    background: "background.paper",
+    overflow: "auto",
+    boxShadow: '10px 10px 8px #999999',
+    paddingTop: '50px',
+    minHeight: '400px',
+    display: 'flex',
+    flexDirection: 'column',}}>
       <List
         aria-labelledby="nested-list-subheader"
         dense
@@ -53,18 +62,9 @@ export function SidebarUnified({  addToList,  all, circuitBreakers, RCDs, surgeP
           </ListSubheader>
         }
         sx={{
-          width: '25%',
-          minWidth: '250px',
-          maxWidth: '400px',
-          bgcolor: "background.paper",
-          overflow: "auto",
-          boxShadow: 24,
-          paddingTop: '50px',
-          minHeight: '400px',
-          display: 'flex',
-          flexDirection: 'column',
+
          
-          flexGrow: 1
+          
           
         }}
       >
@@ -131,6 +131,6 @@ export function SidebarUnified({  addToList,  all, circuitBreakers, RCDs, surgeP
         {open && (<DeviceDetail  addToList={addToList} device={device!} openIn={open} handleClose={setOpen}/>)}
 
       </List>
-    </>
+    </div>
   );
 }
