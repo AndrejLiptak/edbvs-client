@@ -5,7 +5,7 @@ import { Typography } from "@mui/material";
 
 export function PhaseNode({ data }: NodeProps<PhaseData>) {
   return (
-    <div className="phase-node">
+    <div className="phaseNode">
       <Handle type="source" id={data.label} position={Position.Bottom} />
       <Typography align="center" sx={{ pt: "15px" }}>
         {data.label}
