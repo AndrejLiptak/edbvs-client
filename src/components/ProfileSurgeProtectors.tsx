@@ -25,7 +25,6 @@ import {
   useDeleteSurgeProtectorMutation,
   usePostSurgeProtectorMutation,
 } from "../graphql/generated";
-import "../styles/createDevice.css";
 import "../styles/main.css";
 import { allowedArray, fieldLength } from "../types";
 import { CreateDeviceMessage } from "./CreateDeviceMessage";

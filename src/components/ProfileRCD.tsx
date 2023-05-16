@@ -25,7 +25,6 @@ import {
   useDeleteRcdMutation,
   usePostRcdMutation,
 } from "../graphql/generated";
-import "../styles/createDevice.css";
 import "../styles/main.css";
 import { CreateDeviceMessage } from "./CreateDeviceMessage";
 import { Log } from "./Log";

@@ -50,6 +50,7 @@ export function SidebarUnified({  addToList,  all, circuitBreakers, RCDs, surgeP
     paddingTop: '50px',
     minHeight: '400px',
     display: 'flex',
+    flexGrow: 1,
     flexDirection: 'column',}}>
       <List
         aria-labelledby="nested-list-subheader"
