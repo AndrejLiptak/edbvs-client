@@ -4,7 +4,9 @@ import {
   IconButton,
   ListItem,
   ListItemButton,
-  ListItemIcon
+  ListItemIcon,
+  ListItemText,
+  Typography
 } from "@mui/material";
 import { useState } from "react";
 import { IDevice, UserWithoutDevices } from "../types";
@@ -33,7 +35,7 @@ export function SidebarItem({ device, addToList, text }: Props) {
           <ListItemIcon sx={{ mr: -3, ml: -3 }}>
             {device.isVerified && <VerifiedIcon color="secondary" />}
           </ListItemIcon>
-          {text}
+          <ListItemText style={{wordWrap: "break-word"}}>{text}</ListItemText>
         </ListItemButton>
         <DeviceDetail addToList={addToList} device={device} openIn={open} handleClose={setOpen}/>
       </ListItem>

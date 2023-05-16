@@ -53,6 +53,7 @@ export function UsedDeviceItem({device, deviceList, deleteDevice, addToList} : P
             draggable
           >
             <ListItemText
+            sx={{wordWrap: "break-word"}}
               primary={`${device.name}(${device.id})`}
             ></ListItemText>
           </ListItemButton>

@@ -321,6 +321,18 @@ export function ProfileCircuitBreakers({
           `Circuit breaker "${device[id]}" has incorrect maximum temperature value`
         );
       }
+      if (String(device[id]).length > 10) {
+        correct = false;
+        tempLog.push(
+          `Circuit breaker "${device[id]}" has id value too long`
+        );
+      }
+      if (String(device[name]).length > 40) {
+        correct = false;
+        tempLog.push(
+          `Circuit breaker "${device[id]}" has name value too long`
+        );
+      }
       
       if (correct) correcDevices.push(device);
     });
@@ -493,7 +505,7 @@ export function ProfileCircuitBreakers({
               value={deviceModify.id}
               className="id"
               sx={{ pr: 1 }}
-              InputProps={{ inputProps: { autoComplete: "off" } }}
+              InputProps={{ inputProps: { autoComplete: "off", maxLength: 10  } }}
             />
             <TextField
               id="name"
@@ -503,7 +515,7 @@ export function ProfileCircuitBreakers({
               onChange={handleChange}
               value={deviceModify.name}
               className="name"
-              InputProps={{ inputProps: { autoComplete: "off" } }}
+              InputProps={{ inputProps: { autoComplete: "off", maxLength: 40 } }}
             />
           </div>
           <div className="section">

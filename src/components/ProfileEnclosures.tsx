@@ -250,6 +250,20 @@ export function ProfileEnclosures({ enclosures, userEmail, isAdmin }: Props) {
           `Enclosure "${device[id]}" has incorrect one total DIN value`
         );
       }
+      if (String(device[id]).length > 10) {
+        correct = false;
+        tempLog.push(
+          `Enclosure "${device[id]}" has id value too long`
+        );
+      }
+      if (String(device[name]).length > 40) {
+        correct = false;
+        tempLog.push(
+          `Enclosure "${device[id]}" has name value too long`
+        );
+      }
+
+      
       if (correct) correcDevices.push(device);
     });
 
@@ -380,7 +394,7 @@ export function ProfileEnclosures({ enclosures, userEmail, isAdmin }: Props) {
               required
               onChange={handleChange}
               value={enclosureModify.id}
-              InputProps={{ inputProps: { autoComplete: "off" } }}
+              InputProps={{ inputProps: { autoComplete: "off", maxLength: 10 } }}
             />
             <TextField
               id="name"
@@ -390,7 +404,7 @@ export function ProfileEnclosures({ enclosures, userEmail, isAdmin }: Props) {
               required
               onChange={handleChange}
               value={enclosureModify.name}
-              InputProps={{ inputProps: { autoComplete: "off" } }}
+              InputProps={{ inputProps: { autoComplete: "off", maxLength: 40 } }}
             />
           </div>
           <div className="section">

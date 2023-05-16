@@ -94,6 +94,7 @@ export function SidebarUnified({  addToList,  all, circuitBreakers, RCDs, surgeP
                 >
                   
                   <ListItemText
+                    style={{wordWrap: "break-word"}}
                     primary={` ${option.name} (${option.id})`}
                   ></ListItemText>
                 </ListItemButton>

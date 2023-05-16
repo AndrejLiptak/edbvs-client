@@ -267,6 +267,18 @@ export function ProfileSurgeProtectors({
           `Surge protector "${device[id]}" has incorrect type value`
         );
       }
+      if (String(device[id]).length > 10) {
+        correct = false;
+        tempLog.push(
+          `Surge protector "${device[id]}" has id value too long`
+        );
+      }
+      if (String(device[name]).length > 40) {
+        correct = false;
+        tempLog.push(
+          `Surge protector"${device[id]}" has name value too long`
+        );
+      }
       if (correct) correcDevices.push(device);
     });
 
@@ -404,7 +416,7 @@ export function ProfileSurgeProtectors({
               onChange={handleChange}
               sx={{ pr: 1, width: "30%" }}
               value={deviceModify.id}
-              InputProps={{ inputProps: { autoComplete: "off" } }}
+              InputProps={{ inputProps: { autoComplete: "off", maxLength: 10 } }}
             />
             <TextField
               id="name"
@@ -414,7 +426,7 @@ export function ProfileSurgeProtectors({
               required
               onChange={handleChange}
               value={deviceModify.name}
-              InputProps={{ inputProps: { autoComplete: "off" } }}
+              InputProps={{ inputProps: { autoComplete: "off", maxLength: 40 } }}
             />
           </div>
           <div className="section">
