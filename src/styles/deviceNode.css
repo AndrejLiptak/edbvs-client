@@ -1,0 +1,18 @@
+.device-node {
+  height: 50px;
+  border: 1px solid #eee;
+  padding: 5px;
+  border-radius: 5px;
+  background: white;
+}
+
+.phase-node {
+  height: 50px;
+  width: 50px;
+
+  border: 1px solid #000000;
+  padding: 5px;
+  border-radius: 50px;
+  background: white;
+
+}

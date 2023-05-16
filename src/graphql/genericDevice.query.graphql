@@ -1,0 +1,742 @@
+query GenericDevices {
+  GenericDevices {
+    id
+    name
+    userEmail
+    powerLoss
+    maxTemp
+    slots
+    inputs
+    outputs
+    isVerified
+    link
+  }
+}
+
+query CircuitBreaker {
+  CircuitBreakers {
+    id
+    name
+    userEmail
+    maxTemp
+    ratedCurrent
+    poleCount
+    type
+    powerLoss
+    slots
+    inputs
+    outputs
+    isVerified
+    link
+  }
+}
+
+query RCDs {
+  RCDs {
+    id
+    name
+    currentType
+    poleCount
+    maxTemp
+    breakTimeType
+    ratedCurrent
+    ratedResidualCurrent
+    userEmail
+    powerLoss
+    slots
+    inputs
+    outputs
+    isVerified
+    link
+  }
+}
+
+query SurgeProtectors {
+  SurgeProtectors {
+    id
+    name
+    type
+    userEmail
+    maxTemp
+    powerLoss
+    slots
+    inputs
+    outputs
+    isVerified
+    link
+  }
+}
+
+query PLCs {
+  PLCs {
+    id
+    name
+    userEmail
+    powerLoss
+    maxTemp
+    slots
+    inputs
+    outputs
+    digitalIn
+    digitalOut
+    analogIn
+    analogOut
+    isVerified
+    link
+  }
+}
+
+mutation PostGenericDevice(
+  $id: String!
+  $name: String!
+  $inputs: Int!
+  $outputs: Int!
+  $slots: Int!
+  $powerLoss: Float!
+  $maxTemp: Float!
+  $userEmail: String!
+  $isVerified: Boolean!
+  $link: String
+) {
+  postGenericDevice(
+    id: $id
+    name: $name
+    inputs: $inputs
+    outputs: $outputs
+    slots: $slots
+    powerLoss: $powerLoss
+    maxTemp: $maxTemp
+    userEmail: $userEmail
+    isVerified: $isVerified
+    link: $link
+  ) {
+    id
+    name
+    inputs
+    outputs
+    slots
+    powerLoss
+    maxTemp
+    userEmail
+    isVerified
+    link
+  }
+}
+
+mutation PostCircuitBreaker(
+  $id: String!
+  $name: String!
+  $poleCount: String!
+  $type: String!
+  $ratedCurrent: Int!
+  $inputs: Int!
+  $outputs: Int!
+  $slots: Int!
+  $powerLoss: Float!
+  $maxTemp: Float!
+  $userEmail: String!
+  $isVerified: Boolean!
+   $link: String
+) {
+  postCircuitBreaker(
+    id: $id
+    name: $name
+    poleCount: $poleCount
+    type: $type
+    ratedCurrent: $ratedCurrent
+    inputs: $inputs
+    outputs: $outputs
+    slots: $slots
+    powerLoss: $powerLoss
+    maxTemp: $maxTemp
+    userEmail: $userEmail
+    isVerified: $isVerified
+    link: $link
+  ) {
+    id
+    name
+    inputs
+    outputs
+    slots
+    powerLoss
+    maxTemp
+    userEmail
+    poleCount
+    type
+    ratedCurrent
+    isVerified
+    link
+  }
+}
+
+mutation PostRCD(
+  $id: String!
+  $name: String!
+  $poleCount: String!
+  $breakTimeType: String!
+  $ratedCurrent: Int!
+  $ratedResidualCurrent: Float!
+  $currentType: String!
+  $inputs: Int!
+  $outputs: Int!
+  $slots: Int!
+  $powerLoss: Float!
+  $maxTemp: Float!
+  $userEmail: String!
+  $isVerified: Boolean!
+  $link: String
+) {
+  postRCD(
+    id: $id
+    name: $name
+    poleCount: $poleCount
+    currentType: $currentType
+    ratedCurrent: $ratedCurrent
+    ratedResidualCurrent: $ratedResidualCurrent
+    breakTimeType: $breakTimeType
+    inputs: $inputs
+    outputs: $outputs
+    slots: $slots
+    powerLoss: $powerLoss
+    maxTemp: $maxTemp
+    userEmail: $userEmail
+    isVerified: $isVerified
+    link: $link
+  ) {
+    id
+    name
+    inputs
+    outputs
+    slots
+    powerLoss
+    maxTemp
+    userEmail
+    ratedCurrent
+    poleCount
+    currentType
+    ratedResidualCurrent
+    breakTimeType
+    isVerified
+    link
+  }
+}
+
+mutation PostSurgeProtector(
+  $id: String!
+  $name: String!
+  $inputs: Int!
+  $outputs: Int!
+  $slots: Int!
+  $type: String!
+  $powerLoss: Float!
+  $maxTemp: Float!
+  $userEmail: String!
+  $isVerified: Boolean!
+  $link: String
+) {
+  postSurgeProtector(
+    id: $id
+    name: $name
+    inputs: $inputs
+    outputs: $outputs
+    slots: $slots
+    type: $type
+    powerLoss: $powerLoss
+    maxTemp: $maxTemp
+    userEmail: $userEmail
+    isVerified: $isVerified
+    link: $link
+  ) {
+    id
+    name
+    inputs
+    outputs
+    slots
+    type
+    powerLoss
+    maxTemp
+    userEmail
+    isVerified
+    link
+  }
+}
+
+mutation PostPLC(
+  $id: String!
+  $name: String!
+  $inputs: Int!
+  $outputs: Int!
+  $slots: Int!
+  $powerLoss: Float!
+  $maxTemp: Float!
+  $userEmail: String!
+  $digitalIn: Int!
+  $digitalOut: Int!
+  $analogIn: Int!
+  $analogOut: Int!
+  $isVerified: Boolean!
+  $link: String
+) {
+  postPLC(
+    id: $id
+    name: $name
+    inputs: $inputs
+    outputs: $outputs
+    slots: $slots
+    powerLoss: $powerLoss
+    maxTemp: $maxTemp
+    userEmail: $userEmail
+    digitalIn: $digitalIn
+    digitalOut: $digitalOut
+    analogIn: $analogIn
+    analogOut: $analogOut
+    isVerified: $isVerified
+    link: $link
+  ) {
+    id
+    name
+    inputs
+    outputs
+    slots
+    powerLoss
+    maxTemp
+    userEmail
+    digitalIn
+    digitalOut
+    analogIn
+    analogOut
+    isVerified
+    link
+  }
+}
+
+mutation PostUser($email: String!, $name: String!) {
+  postUser(email: $email, name: $name) {
+    name
+    email
+    isCompany
+    companyName
+    companyICO
+    genericDevices {
+      id
+      name
+      powerLoss
+      maxTemp
+      inputs
+      outputs
+      slots
+      userEmail
+      isVerified
+      link
+    }
+    circuitBreakers {
+      id
+      name
+      powerLoss
+      maxTemp
+      inputs
+      outputs
+      slots
+      ratedCurrent
+      poleCount
+      type
+      userEmail
+      isVerified
+      link
+    }
+
+    RCDs {
+      id
+      name
+      maxTemp
+      currentType
+      poleCount
+      breakTimeType
+      ratedCurrent
+      ratedResidualCurrent
+      userEmail
+      powerLoss
+      slots
+      inputs
+      outputs
+      isVerified
+      link
+    }
+
+    enclosures {
+      id
+      name
+      totalSlots
+      totalDIN
+      oneDINSlots
+      heatDissipation
+      userEmail
+      isVerified
+      link
+    }
+    surgeProtectors {
+      id
+      name
+      type
+      userEmail
+      maxTemp
+      powerLoss
+      slots
+      inputs
+      outputs
+      isVerified
+      link
+    }
+    PLCs {
+      id
+      name
+      userEmail
+      powerLoss
+      maxTemp
+      slots
+      inputs
+      outputs
+      digitalIn
+      digitalOut
+      analogIn
+      analogOut
+      isVerified
+      link
+    }
+    approval {
+      userEmail
+      approved
+      companyICO
+      companyName
+      rejected
+    }
+  }
+}
+
+mutation DeleteGenericDevice($id: String!) {
+  deleteGenericDevice(id: $id) {
+    id
+  }
+}
+
+mutation DeleteCircuitBreaker($id: String!) {
+  deleteCircuitBreaker(id: $id) {
+    id
+  }
+}
+
+mutation DeleteRCD($id: String!) {
+  deleteRCD(id: $id) {
+    id
+  }
+}
+
+mutation DeleteSurgeProtector($id: String!) {
+  deleteSurgeProtector(id: $id) {
+    id
+  }
+}
+
+mutation DeletePLC($id: String!) {
+  deletePLC(id: $id) {
+    id
+  }
+}
+
+query Users {
+  Users {
+    name
+    email
+    companyName
+    companyICO
+    isCompany
+    approval {
+      approved
+      rejected
+    }
+  }
+}
+
+query User($email: String!) {
+  User(email: $email) {
+    name
+    email
+    companyName
+    companyICO
+    isCompany
+    genericDevices {
+      id
+      name
+      powerLoss
+      maxTemp
+      inputs
+      outputs
+      slots
+      userEmail
+      isVerified
+      link
+    }
+    RCDs {
+      id
+      name
+      currentType
+      maxTemp
+      poleCount
+      breakTimeType
+      ratedCurrent
+      ratedResidualCurrent
+      userEmail
+      powerLoss
+      slots
+      inputs
+      outputs
+      isVerified
+      link
+    }
+    circuitBreakers {
+      id
+      name
+      powerLoss
+      maxTemp
+      inputs
+      outputs
+      slots
+      ratedCurrent
+      poleCount
+      type
+      userEmail
+      isVerified
+      link
+    }
+
+    enclosures {
+      id
+      name
+      totalSlots
+      totalDIN
+      oneDINSlots
+      heatDissipation
+      userEmail
+      isVerified
+      link
+    }
+    surgeProtectors {
+      id
+      name
+      type
+      userEmail
+      maxTemp
+      powerLoss
+      slots
+      inputs
+      outputs
+      isVerified
+      link
+    }
+    PLCs {
+      id
+      name
+      userEmail
+      powerLoss
+      maxTemp
+      slots
+      inputs
+      outputs
+      digitalIn
+      digitalOut
+      analogIn
+      analogOut
+      isVerified
+      link
+    }
+    approval {
+      approved
+      rejected
+    }
+  }
+}
+
+mutation VerifyUser($email: String!, $isVerified: Boolean!) {
+  userVerification(email: $email, isVerified: $isVerified) {
+    email
+    isVerified
+  }
+}
+
+query Enclosures {
+  Enclosures {
+    id
+    name
+    totalSlots
+    totalDIN
+    oneDINSlots
+    heatDissipation
+    userEmail
+    isVerified
+    link
+  }
+}
+
+mutation DeleteEnclosure($id: String!) {
+  deleteEnclosure(id: $id) {
+    id
+  }
+}
+
+mutation PostEnclosure(
+  $id: String!
+  $name: String!
+  $totalSlots: Int!
+  $totalDIN: Int!
+  $oneDINSlots: Int!
+  $heatDissipation: Float!
+  $userEmail: String!
+  $isVerified: Boolean!
+  $link: String
+) {
+  postEnclosure(
+    id: $id
+    name: $name
+    totalSlots: $totalSlots
+    totalDIN: $totalDIN
+    oneDINSlots: $oneDINSlots
+    heatDissipation: $heatDissipation
+    userEmail: $userEmail
+    isVerified: $isVerified
+    link: $link
+  ) {
+    id
+    name
+    totalSlots
+    totalDIN
+    oneDINSlots
+    heatDissipation
+    userEmail
+    isVerified
+    link
+  }
+}
+
+query Requests {
+  CompanyRequests {
+    userEmail
+    approved
+    companyICO
+    companyName
+    rejected
+  }
+}
+
+query Request($userEmail: String!) {
+  CompanyRequest(userEmail: $userEmail) {
+    userEmail
+    approved
+    companyICO
+    companyName
+    rejected
+  }
+}
+
+mutation PostCompanyRequest(
+  $userEmail: String!
+  $companyName: String!
+  $companyICO: Int!
+) {
+  postCompanyRequest(
+    userEmail: $userEmail
+    companyICO: $companyICO
+    companyName: $companyName
+  ) {
+    userEmail
+    approved
+    companyICO
+    companyName
+  }
+}
+
+mutation ApproveRequest($userEmail: String!) {
+  companyApprove(userEmail: $userEmail) {
+    userEmail
+    approved
+    companyICO
+    companyName
+  }
+}
+
+mutation RejectRequest($userEmail: String!) {
+  companyReject(userEmail: $userEmail) {
+    userEmail
+    approved
+    companyICO
+    companyName
+  }
+}
+
+mutation UpdateRequest(
+  $userEmail: String!
+  $companyName: String!
+  $companyICO: Int!
+) {
+  companyUpdate(
+    userEmail: $userEmail
+    companyICO: $companyICO
+    companyName: $companyName
+  ) {
+    userEmail
+    approved
+    companyICO
+    companyName
+  }
+}
+
+mutation UserCompany(
+  $email: String!
+  $isCompany: Boolean!
+  $companyName: String!
+  $companyICO: Int!
+) {
+  userCompany(
+    email: $email
+    isCompany: $isCompany
+    companyName: $companyName
+    companyICO: $companyICO
+  ) {
+    isVerified
+  }
+}
+
+mutation VerifyGeneric($id: String!, $isVerified: Boolean!) {
+  genericVerification(id: $id, isVerified: $isVerified) {
+    isVerified
+  }
+}
+
+mutation VerifyCircuit($id: String!, $isVerified: Boolean!) {
+  circuitVerification(id: $id, isVerified: $isVerified) {
+    isVerified
+  }
+}
+
+mutation VerifyPlc($id: String!, $isVerified: Boolean!) {
+  plcVerification(id: $id, isVerified: $isVerified) {
+    isVerified
+  }
+}
+
+mutation VerifyRcd($id: String!, $isVerified: Boolean!) {
+  rcdVerification(id: $id, isVerified: $isVerified) {
+    isVerified
+  }
+}
+
+mutation VerifySurge($id: String!, $isVerified: Boolean!) {
+  surgeVerification(id: $id, isVerified: $isVerified) {
+    isVerified
+  }
+}
+
+mutation VerifyEnclosure($id: String!, $isVerified: Boolean!) {
+  enclosureVerification(id: $id, isVerified: $isVerified) {
+    isVerified
+  }
+}

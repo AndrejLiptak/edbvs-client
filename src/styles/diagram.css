@@ -1,0 +1,56 @@
+.diagram {
+  flex-direction: column;
+  display: flex;
+  flex-grow: 1;
+  
+  min-height: 400px;
+  padding-top: 50px;
+}
+
+.diagram aside {
+  border-right: 1px solid #eee;
+  padding: 15px 10px;
+  font-size: 12px;
+  background: #fcfcfc;
+}
+
+.diagram aside .desription {
+  margin-bottom: 10px;
+}
+
+.diagram .node {
+  height: 20px;
+  padding: 4px;
+  border: 1px solid #1a192b;
+  border-radius: 2px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+}
+
+.diagram .reactflow-wrapper {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.diagram .selectall {
+  margin-top: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .diagram {
+    flex-direction: row;
+  }
+
+  .diagram aside {
+    width: 20%;
+    max-width: 250px;
+  }
+}
+
+.btn {
+  background-color: #00897b,
+
+}
