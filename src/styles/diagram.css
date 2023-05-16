@@ -54,3 +54,93 @@
   background-color: #00897b,
 
 }
+
+.device-node {
+  height: 50px;
+  border: 1px solid #eee;
+  padding: 5px;
+  border-radius: 5px;
+  background: white;
+}
+
+.phaseNode {
+  height: 50px;
+  width: 50px;
+
+  border: 1px solid #000000;
+  padding: 5px;
+  border-radius: 50px;
+  background: white;
+
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+  height: 3%;
+  background-color: #f4f5cf;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+}
+
+.Log {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 2px solid #000;
+  box-shadow: 24;
+  padding: 1rem;
+}
+
+.CreateBox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 2px solid #000;
+  box-shadow: 24;
+  padding: 1rem;
+  min-width: 450px;
+}
+
+.Profile {
+  padding: 1rem;
+  padding-top: 3rem;
+  height: 90%;
+}
+
+.CircularProgress {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.error {
+  width: 100%;
+  color: red;
+  text-align: center;
+}
+
+.success {
+  width: 100%;
+  color: green;
+  text-align: center;
+}
+
