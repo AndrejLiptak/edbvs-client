@@ -29,6 +29,7 @@ interface TabPanelProps {
   value: number;
 }
 
+
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
@@ -96,7 +97,9 @@ export function Admin() {
   const genericDevices = useGenericDevicesQuery();
   const [postVerifyGenericResult, postVerifyGeneric] =
     useVerifyGenericMutation();
+
   if (!isAdmin) return <Navigate to="/profile" />;
+  
   const users = usersInDb.data?.Users;
   const requests = requestsDB.data?.CompanyRequests;
 
