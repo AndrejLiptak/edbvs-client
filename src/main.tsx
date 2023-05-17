@@ -5,12 +5,12 @@ import { createClient, Provider, fetchExchange, cacheExchange } from "urql";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { Auth0ProviderWithNavigate } from "./auth0-provider-with-navigate";
-import { ProfilePage } from "./components/Profile";
+import { ProfilePage } from "./components/profile/Profile";
 import { AuthenticationGuard } from "./authenticationGuard";
-import { Users } from "./components/Users";
+import { Users } from "./components/admin/Users";
 import "./styles/main.css";
-import { DeviceNode } from "./components/DeviceNode";
-import Designer from "./components/Designer";
+import { DeviceNode } from "./components/designer/diagram/nodes/DeviceNode";
+import Designer from "./components/designer/Designer";
 import { ThemeProvider, createTheme } from "@mui/material";
 
 

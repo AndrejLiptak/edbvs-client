@@ -1,7 +1,7 @@
 import type { GenericDevice, PlCsQuery, RcDsQuery, SurgeProtectorsQuery, UsersQuery } from "./graphql/generated";
 import { GenericDevicesQuery } from "./graphql/generated";
 import { CircuitBreakerQuery} from "./graphql/generated";
-import { DeviceNode } from "./components/DeviceNode";
+import { DeviceNode } from "./components/designer/diagram/nodes/DeviceNode";
 
 
 
