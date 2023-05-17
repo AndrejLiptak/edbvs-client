@@ -21,6 +21,8 @@ type Props = {
   openIn: boolean;
 };
 
+// modal with device information
+
 export function DeviceDetail({
   device,
   addToList,

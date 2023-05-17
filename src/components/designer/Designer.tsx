@@ -23,6 +23,8 @@ function Designer() {
   const [surgeProtectors] = useSurgeProtectorsQuery();
   const [PLCs] = usePlCsQuery();
 
+  // possible to wait before devices are loaded from the server
+
   //  if (
   //   devices.fetching ||
   //  circuitBreakers.fetching ||

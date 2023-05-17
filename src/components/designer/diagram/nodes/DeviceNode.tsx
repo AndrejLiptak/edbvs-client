@@ -11,6 +11,8 @@ type Props = {
 export type CustomNode = Node<NodeData>;
 
 export function DeviceNode({ data }: NodeProps<NodeData>) {
+
+  // input handles
   function TopHandles({ inputs, width }: Props) {
     var handels = [];
     for (var i = 0; i < inputs; i++) {
@@ -24,7 +26,7 @@ export function DeviceNode({ data }: NodeProps<NodeData>) {
             position={Position.Top}
             style={{ left: `${spacing * (i + 1)}px` }}
           />
-          {data.device.__typename == "PLC" && (
+          {data.device.__typename == "PLC" && (     
             <Typography
               sx={{
                 pl: `${spacing * (i + 1) - 10}px`,
@@ -44,6 +46,7 @@ export function DeviceNode({ data }: NodeProps<NodeData>) {
     return <>{handels}</>;
   }
 
+  // outputs handles
   function BottomHandles({ inputs, width }: Props) {
     var handels = [];
     for (var i = 0; i < inputs; i++) {
@@ -77,11 +80,10 @@ export function DeviceNode({ data }: NodeProps<NodeData>) {
 
     return <>{handels}</>;
   }
+
   const style = {
     background: `${data.color}`,
     color: `#000`,
-    //boxShadow: "0px 3px 10px rgba(0,0,0,0.25)",
-
     width: `${data.device.slots * 60}px`,
     height: `${200}px`,
     borderStyle: "solid",

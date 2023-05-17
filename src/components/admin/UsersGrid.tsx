@@ -8,9 +8,12 @@ type Props = {
 
 export function UsersGrid({ users }: Props) {
   const [rows, setRows] = useState(users ?? []);
+
+  // updater rows when users are loaded from the database
   useEffect(() => {
     setRows(users ?? []);
   }, [users]);
+  
   const columns: GridColDef[] = [
     { field: "email", headerName: "User Email", width: 350, type: "string" },
     { field: "name", headerName: "User name", width: 350, type: "string" },

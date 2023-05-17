@@ -26,8 +26,7 @@ export function UsedDeviceItem({
 }: Props) {
   const [open, setOpen] = useState(false);
   const key = device.id + device.__typename;
-  const numbers = deviceList.get(device);
-  if (typeof numbers === "undefined") return <></>;
+  const count = deviceList.get(device)!;
 
   const onDragStart = (
     event: React.DragEvent<HTMLDivElement>,
@@ -43,8 +42,8 @@ export function UsedDeviceItem({
       <ListItem
         key={key}
         secondaryAction={
-          (numbers > 0 && <Typography sx={{ mr: 1 }}>{numbers}</Typography>) ||
-          (numbers == 0 && (
+          (count > 0 && <Typography sx={{ mr: 1 }}>{count}</Typography>) ||
+          (count == 0 && (
             <>
               <IconButton onClick={() => deleteDevice(device)} sx={{ mr: -1 }}>
                 <DeleteIcon />

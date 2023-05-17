@@ -7,7 +7,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { Auth0ProviderWithNavigate } from "./auth0-provider-with-navigate";
 import { ProfilePage } from "./components/profile/Profile";
 import { AuthenticationGuard } from "./authenticationGuard";
-import { Users } from "./components/admin/Users";
+import { Admin } from "./components/admin/Admin";
 import "./styles/main.css";
 import { DeviceNode } from "./components/designer/diagram/nodes/DeviceNode";
 import Designer from "./components/designer/Designer";
@@ -62,7 +62,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             ></Route>
             <Route
               path="/admin"
-              element={<AuthenticationGuard component={Users} />}
+              element={<AuthenticationGuard component={Admin} />}
             ></Route>
           </Routes>
           </ThemeProvider>

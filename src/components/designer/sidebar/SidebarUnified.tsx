@@ -77,12 +77,12 @@ export function SidebarUnified({
           </ListSubheader>
         }
       >
-        <Autocomplete
-          key={"searchbar"}
+        <Autocomplete // search bar
+          key={"searchbar"} 
           disablePortal
           id="search"
           options={all}
-          renderOption={(props, option, { selected }) => {
+          renderOption={(props, option, { selected }) => {  // device in a search bar
             return (
               <>
                 <ListItem

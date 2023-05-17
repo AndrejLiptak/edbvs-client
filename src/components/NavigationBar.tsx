@@ -16,7 +16,8 @@ import { Link as RouterLink } from "react-router-dom";
 import "../styles/main.css";
 
 export function NavigationBar() {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null); // for navigation Menu
+
   const handleLogin = async () => {
     await loginWithRedirect({
       appState: {
@@ -34,6 +35,14 @@ export function NavigationBar() {
     });
   };
 
+  const handleLogout = () => {
+    logout({
+      logoutParams: {
+        returnTo: import.meta.env.VITE_REACT_APP_AUTH0_LOGOUT_URL,
+      },
+    });
+  };
+
   const {
     logout,
     user,
@@ -46,20 +55,13 @@ export function NavigationBar() {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleLogout = () => {
-    logout({
-      logoutParams: {
-        returnTo: import.meta.env.VITE_REACT_APP_AUTH0_LOGOUT_URL,
-      },
-    });
-  };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   var isAdmin = false;
 
+  // get list of user roles fom Auth0
   if (user) {
     const roles = user["https://myroles.com/roles"];
     if (roles.includes("admin")) isAdmin = true;
@@ -72,7 +74,6 @@ export function NavigationBar() {
         color="primary"
         sx={{
           height: "50px",
-
           position: "fixed",
         }}
       >
@@ -86,7 +87,6 @@ export function NavigationBar() {
             href="/"
             sx={{
               mr: 2,
-
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",

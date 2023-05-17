@@ -107,9 +107,6 @@ export function ProfilePage() {
   });
   const userInDb = userQuery[0];
 
-  // if (!newUser && (!userInDb || userInDb.fetching))
-  // return <CircularProgress className="CircularProgress" />;
-
   if (
     !newUser &&
     userInDb.data &&
@@ -126,9 +123,7 @@ export function ProfilePage() {
       return <CircularProgress className="CircularProgress" />;
   }
 
-  // if (!newUser && (!userInDb.data || !userInDb.data.User))
-  //  return <CircularProgress className="CircularProgress" />;
-
+  // possible to wait for the user from the server
   // if (!newUser && !userInDb.data)
   //  return <CircularProgress className="CircularProgress" />;
   var userData = userInDb.data?.User;
@@ -136,8 +131,8 @@ export function ProfilePage() {
 
   var isAdmin = false;
   if (user) {
-    const roles = user["https://myroles.com/roles"];
-    if (roles.includes("admin")) isAdmin = true;
+    const roles = user["https://myroles.com/roles"];  
+    if (roles.includes("admin")) isAdmin = true; // for device creation, admin devices are automatically verified
   }
 
   return (

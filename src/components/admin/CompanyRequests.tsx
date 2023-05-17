@@ -12,6 +12,8 @@ type Props = {
 };
 
 export function RequestGrid({ requests }: Props) {
+
+  // aprove request
   function handleApprove(userEmail: string, index: number) {
     const variables = {
       userEmail: userEmail,
@@ -29,6 +31,7 @@ export function RequestGrid({ requests }: Props) {
     setRows(newRows);
   }
 
+  // reject request
   function handleReject(userEmail: string, index: number) {
     const variables = {
       userEmail: userEmail,
@@ -40,9 +43,12 @@ export function RequestGrid({ requests }: Props) {
   }
 
   const [rows, setRows] = useState(requests);
+
+  // updates rows when requests load from the server
   useEffect(() => {
     setRows(requests ?? []);
   }, [requests]);
+
   const columns: GridColDef[] = [
     {
       field: "userEmail",
@@ -96,9 +102,11 @@ export function RequestGrid({ requests }: Props) {
       },
     },
   ];
+  
   const [approveRequestResult, approveRequest] = useApproveRequestMutation();
-  const [userCompanyResult, userCompany] = useUserCompanyMutation();
+  const [userCompanyResult, userCompany] = useUserCompanyMutation(); // change user to company account
   const [rejectRequestResult, rejectRequest] = useApproveRequestMutation();
+  
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <DataGrid

@@ -24,6 +24,7 @@ type Props = {
   deviceList: Map<IDevice, number>;
 };
 
+// create png from react flow diagram
 export const createPNG = (
   reactFlowInstance: ReactFlowInstance | null,
   processPNG: (arg0: string) => void

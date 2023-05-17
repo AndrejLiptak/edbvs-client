@@ -22,7 +22,6 @@ type Props = {
   setEnclosureModalOpen: (value: boolean) => void;
   errorEnclosure: string | undefined;
   placement: string;
-  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   fittingEnclosures: Enclosure[];
   selectedEnclosure: Enclosure | undefined;
   setSelectedEnclosure: (enclosure: Enclosure | undefined) => void;
@@ -36,24 +35,19 @@ type Props = {
   setNodes: (nodes: Node[]) => void;
   setEdges: (edges: Edge[]) => void;
   setWiringEdges: (edges: Edge[]) => void;
+  enclosuresAll: Enclosure[] | undefined;
+  setFittingEnclosures: (enclosures: Enclosure[]) => (void);
+  totalDINSlots: number
+  totalPowerLoss: number
+  biggestSlot: number
+  placementOptions: string[]
 };
-
-const placementOptions = [
-  "Free standing",
-  "Next to wall from back",
-  "Next to wall from one side",
-  "Next to wall from both sides",
-  "Next to wall from back and one side",
-  "Next to wall from back and both sides",
-  "Next to wall from back, both sides and blocked on top",
-];
 
 export function EnclosureSelection({
   enclosureModalOpen,
   setEnclosureModalOpen,
   errorEnclosure,
   placement,
-  handleChange,
   fittingEnclosures,
   selectedEnclosure,
   setSelectedEnclosure,
@@ -67,7 +61,14 @@ export function EnclosureSelection({
   setNodes,
   setWiringEdges,
   setEdges,
+  enclosuresAll,
+  setFittingEnclosures,
+  totalDINSlots,
+  totalPowerLoss,
+  biggestSlot,
+  placementOptions
 }: Props) {
+
   const onConfirmEnclosure = () => {
     reactFlowInstance?.fitView();
 
@@ -134,6 +135,46 @@ export function EnclosureSelection({
     setTimeout(() => {
       reactFlowInstance?.fitView();
     }, 10);
+  };
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    let value = event.target.value;
+    setPlacement(value);
+    var placemenentModifier = 0;
+    switch (value) {
+      case placementOptions[0]:
+        placemenentModifier = 1;
+        break;
+      case placementOptions[1]:
+        placemenentModifier = 0.9;
+        break;
+      case placementOptions[2]:
+        placemenentModifier = 0.925;
+        break;
+      case placementOptions[3]:
+        placemenentModifier = 0.85;
+        break;
+      case placementOptions[4]:
+        placemenentModifier = 0.825;
+        break;
+      case placementOptions[5]:
+        placemenentModifier = 0.76;
+        break;
+      case placementOptions[6]:
+        placemenentModifier = 0.7;
+        break;
+    }
+
+    const newEnclosures = enclosuresAll!.filter(
+      (enclosure) =>
+        enclosure.totalSlots >= totalDINSlots &&
+        enclosure.oneDINSlots >= biggestSlot &&
+        enclosure.heatDissipation * placemenentModifier >= totalPowerLoss / 100
+    );
+    setFittingEnclosures(
+      newEnclosures.sort((a, b) => Number(b.isVerified) - Number(a.isVerified))
+    );
+    setSelectedEnclosure(newEnclosures[0]);
   };
 
   var currentDIN = 1;

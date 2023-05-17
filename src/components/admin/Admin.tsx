@@ -53,7 +53,7 @@ function a11yProps(index: number) {
   };
 }
 
-export function Users() {
+export function Admin() {
   function executeQuerry() {
     const [userInDb] = useUsersQuery();
     return userInDb;

@@ -10,7 +10,12 @@ type Props = {
   type: string;
 };
 
+
+// displays data grid of each device type for the admin
+
 export function AdminDevice({ devices, postDevice, type }: Props) {
+
+  // verify device
   function handleVerify(isVerified: boolean, id: string, index: number) {
     const variables = {
       id: id,
@@ -21,13 +26,15 @@ export function AdminDevice({ devices, postDevice, type }: Props) {
     newUsers[index].isVerified = !isVerified;
     setRows(newUsers);
   }
-  const [loading, setLoading] = useState(typeof devices);
 
   const [rows, setRows] = useState(devices ?? []);
 
+  // when devices are loaded from the server, updates rows
   useEffect(() => {
     if (rows.length == 0) setRows(devices ?? []);
   }, [devices]);
+
+
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 100, type: "string" },
     { field: "name", headerName: "Name", width: 200, type: "string" },

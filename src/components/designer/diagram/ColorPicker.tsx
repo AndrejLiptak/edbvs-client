@@ -18,33 +18,25 @@ export function ColorPicker({
   setColorDevice,
   colorInitial,
 }: Props) {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [anchorElText, setAnchorElText] = useState<null | HTMLElement>(null);
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null); // for color picker popup
   const [color, setColor] = useState(colorInitial);
-  const [colorText, setColorText] = useState("#000");
-
+ 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const open = Boolean(anchorEl);
   const id = open ? "simple-popper" : undefined;
-
-  const handleClickText = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorElText(event.currentTarget);
-  };
-  const handleCloseText = () => {
-    setAnchorElText(null);
-  };
-  const openText = Boolean(anchorElText);
-  const idText = openText ? "simple-popper" : undefined;
 
   const handleChange = (color: string) => {
     setColorDevice(color);
 
+    // whole data property needs to be updated for the change to render immediately
     setNodes(
       nodes.map((node) => {
         if (node.data.device && node.data.device.__typename == type) {

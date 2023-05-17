@@ -48,6 +48,7 @@ const style = {
   p: 4,
 };
 
+// enclosure placement options
 const placementOptions = [
   "Free standing",
   "Next to wall from back",
@@ -87,6 +88,7 @@ export function Diagram({
   const [colorPLC, setColorPLC] = useState("#fff");
   const [colorGeneric, setColorGeneric] = useState("#fff");
 
+  // create connection between nodes
   const onConnect = useCallback((params: Edge | Connection) => {
     setEdges((eds) => addEdge(params, eds));
   }, []);
@@ -96,49 +98,46 @@ export function Diagram({
     event.dataTransfer.dropEffect = "move";
   }, []);
 
+  // create device node after draging and droping a device from used devices list
   const onDrop = useCallback(
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault();
       if (selectedEnclosure) return;
-      if (!reactFlowWrapper || !reactFlowWrapper.current) return;
-      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-      const deviceJSON = event.dataTransfer.getData("application/reactflow");
+
+      const reactFlowBounds =
+        reactFlowWrapper?.current?.getBoundingClientRect()!;
+      const deviceJSON = event.dataTransfer.getData("application/reactflow"); // get device JSON representation
 
       if (typeof deviceJSON === "undefined" || !deviceJSON) return;
-      if (!reactFlowInstance) return;
 
-      const position = reactFlowInstance.project({
+      const position = reactFlowInstance?.project({
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
-      });
+      })!;
 
       const deviceTemp: IDevice = JSON.parse(deviceJSON);
-
       const arraysOfKeys = Array.from(deviceList.keys());
+      const tempDevice = arraysOfKeys.find(
+        (device) =>
+          device.__typename == deviceTemp.__typename &&
+          device.id == deviceTemp.id
+      );
 
-      const tempDevices = arraysOfKeys.filter((v, i) => {
-        return (
-          v["id"] == deviceTemp.id && v["__typename"] == deviceTemp.__typename
-        );
-      });
+      const device = tempDevice!;
 
-      const device = tempDevices[0];
-      var numbers = deviceList.get(device);
-
-      if (typeof numbers === undefined) return;
-
-      numbers ??= 0;
-      deviceList.set(device, numbers + 1);
+      var count = deviceList.get(device)!;
+      count ??= 0;
+      deviceList.set(device, count + 1);
       const usedOrder: number[] = [];
+
+      // find lower order number among nodes with the same device
       nodes.forEach((node) => {
         if (node.data.device && node.data.device.id == device.id)
           usedOrder.push(node.data.order);
       });
-
       usedOrder.sort((a, b) => {
         return a - b;
       });
-
       var lowest = 0;
       for (let i = 0; i < usedOrder.length; i++) {
         if (usedOrder[i] != i + 1) {
@@ -264,14 +263,18 @@ export function Diagram({
     setSelectedEnclosure(undefined);
   };
 
-  const edgeTypes = useMemo(() => ({ default: SmartStepEdge }), []);
+  // without useMemo, edgeTypes and nodeTypes are created on each rerender
+
+  const edgeTypes = useMemo(() => ({ default: SmartStepEdge }), []); // https://github.com/tisoap/react-flow-smart-edge
 
   const nodeTypes = useMemo(
     () => ({ deviceNode: DeviceNode, phaseNode: PhaseNode, dinNode: DINNode }),
     []
   );
 
+  //start enclosure selection
   const onNextStep = () => {
+    // store png of wiring diagram, for document generation
     createPNG(reactFlowInstance, (base64String) => {
       setWiringDiagram(base64String);
     });
@@ -289,7 +292,9 @@ export function Diagram({
         enclosure.heatDissipation >= totalPowerLoss / 100
       );
     });
+
     if (!enclosures) return;
+
     setFittingEnclosures(
       enclosures.sort((a, b) => Number(b.isVerified) - Number(a.isVerified))
     );
@@ -297,6 +302,7 @@ export function Diagram({
     if (enclosures.length > 0) setSelectedEnclosure(enclosures[0]);
   };
 
+  // reset view to wiring diagram creation
   const onReturnToDesigner = () => {
     setSelectedEnclosure(undefined);
     wiringNodes.forEach((node) => {
@@ -314,46 +320,6 @@ export function Diagram({
       reactFlowInstance?.fitView();
     }, 10);
     setPlacement(placementOptions[0]);
-  };
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    let value = event.target.value;
-    setPlacement(value);
-    var placemenentModifier = 0;
-    switch (value) {
-      case placementOptions[0]:
-        placemenentModifier = 1;
-        break;
-      case placementOptions[1]:
-        placemenentModifier = 0.9;
-        break;
-      case placementOptions[2]:
-        placemenentModifier = 0.925;
-        break;
-      case placementOptions[3]:
-        placemenentModifier = 0.85;
-        break;
-      case placementOptions[4]:
-        placemenentModifier = 0.825;
-        break;
-      case placementOptions[5]:
-        placemenentModifier = 0.76;
-        break;
-      case placementOptions[6]:
-        placemenentModifier = 0.7;
-        break;
-    }
-
-    const newEnclosures = enclosuresAll!.filter(
-      (enclosure) =>
-        enclosure.totalSlots >= totalDINSlots &&
-        enclosure.oneDINSlots >= biggestSlot &&
-        enclosure.heatDissipation * placemenentModifier >= totalPowerLoss / 100
-    );
-    setFittingEnclosures(
-      newEnclosures.sort((a, b) => Number(b.isVerified) - Number(a.isVerified))
-    );
-    setSelectedEnclosure(newEnclosures[0]);
   };
 
   const enclosuresQuery = useEnclosuresQuery();
@@ -453,7 +419,11 @@ export function Diagram({
           enclosureModalOpen={enclosureModalOpen}
           errorEnclosure={errorEnclosure}
           fittingEnclosures={fittingEnclosures}
-          handleChange={handleChange}
+          biggestSlot={biggestSlot}
+          enclosuresAll={enclosuresAll}
+          setFittingEnclosures={setFittingEnclosures}
+          totalDINSlots={totalDINSlots}
+          totalPowerLoss={totalPowerLoss}
           placement={placenment}
           selectedEnclosure={selectedEnclosure}
           setEnclosureModalOpen={setEnclosureModalOpen}
@@ -468,6 +438,7 @@ export function Diagram({
           setNodes={setNodes}
           setWiringEdges={setWiringEdges}
           setWiringNodes={setWiringNodes}
+          placementOptions={placementOptions}
         ></EnclosureSelection>
       </ReactFlowProvider>
     </div>
