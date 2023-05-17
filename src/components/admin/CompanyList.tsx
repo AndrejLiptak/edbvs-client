@@ -1,8 +1,6 @@
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
-import { IUsers } from "../types";
 import { useState } from "react";
-import { Button } from "@mui/material";
-import { useVerifyUserMutation } from "../graphql/generated";
+import { IUsers } from "../../types";
 
 type Props = {
   users: IUsers[];
