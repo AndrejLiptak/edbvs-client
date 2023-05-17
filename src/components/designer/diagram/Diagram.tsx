@@ -36,7 +36,7 @@ import {
   nodeTypes,
 } from "../../../types";
 import ReactFlow from "reactflow";
-import "../../../styles/diagram.css"
+import "../../../styles/diagram.css";
 import "reactflow/dist/style.css";
 import { ConnectionMode } from "reactflow";
 import { UsedDevices } from "./UsedDevices";
@@ -62,6 +62,7 @@ import { Enclosure, useEnclosuresQuery } from "../../../graphql/generated";
 import { PhaseSelection } from "./PhaseSelection";
 import { DINNode } from "./nodes/DINNode";
 import { DownloadDocument, createPNG } from "./DownloadDocument";
+import { EnclosureSelection } from "./EnclosureSelection";
 
 type Props = {
   deviceList: Map<IDevice, number>;
@@ -80,7 +81,7 @@ const style = {
   width: 600,
   maxHeight: "40%",
   minHeight: 350,
-    display: "flex",
+  display: "flex",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -336,154 +337,6 @@ export function Diagram({
     if (enclosures.length > 0) setSelectedEnclosure(enclosures[0]);
   };
 
-  const onConfirmEnclosure = () => {
-    reactFlowInstance?.fitView();
-
-    notFitting = false;
-    setEnclosureModalOpen(false);
-    const copy = nodes.slice();
-    setWiringNodes(copy);
-    const dinNodes: Node[] = [];
-    if (selectedEnclosure === undefined) return;
-    for (let i = 1; i <= selectedEnclosure?.totalDIN; i++) {
-      dinNodes.push({
-        id: `DIN${i}`,
-        type: "dinNode",
-        deletable: false,
-        draggable: false,
-        selectable: false,
-        position: { x: 0, y: i * 220 - selectedEnclosure?.totalDIN * 110 },
-        data: { slots: selectedEnclosure.oneDINSlots, filled: 0 },
-      });
-    }
-
-    if (!phase) return;
-    const phaseNodes: Node[] = [];
-    for (let i = 1; i <= phase; i++) {
-      const pNode = reactFlowInstance?.getNode(`L${i}`);
-      if (!pNode) return;
-      phaseNodes.push(pNode);
-    }
-    phaseNodes.forEach((pNode) => {
-      if (!pNode) return;
-      const connected = getConnectedEdges([pNode], edges);
-      connected.forEach((connection) => {
-        var nextNode = reactFlowInstance?.getNode(connection.source);
-        if (connection.source == pNode.id) {
-          nextNode = reactFlowInstance?.getNode(connection.target);
-        }
-        if (!nextNode) return;
-        recursionSlot(nextNode, dinNodes);
-      });
-    });
-
-    nodes.forEach((node) => {
-      const temp = reactFlowInstance?.getNode(node.id)!;
-      if (!temp.data.slotted) recursionSlot(temp, dinNodes);
-    });
-
-    if (notFitting) {
-      setErrorEnclosure(selectedEnclosure.id);
-      setSelectedEnclosure(undefined);
-      setEnclosureModalOpen(true);
-      copy.forEach((node) => {
-        node.data.slotted = false;
-      });
-      setNodes(copy);
-
-      return;
-    }
-
-    setNodes(dinNodes);
-    setWiringEdges(edges);
-    setErrorEnclosure(undefined);
-    setEdges([]);
-    reactFlowInstance?.fitView();
-    setTimeout(() => {
-      reactFlowInstance?.fitView();
-    }, 10);
-  };
-
-  var currentDIN = 1;
-  var notFitting = false;
-  const recursionSlot = (node: Node, dinNodes: Node[]) => {
-    if (node.data.slotted) return;
-    if (notFitting) return;
-    if (node.data.label == "L1") return;
-
-    if (
-      dinNodes[currentDIN - 1].data.slots -
-        dinNodes[currentDIN - 1].data.filled <
-      node.data.device.slots
-    ) {
-      const previousDIN = currentDIN;
-      currentDIN += 1;
-      if (!selectedEnclosure) return;
-      if (currentDIN > selectedEnclosure.totalDIN) currentDIN = 1;
-      while (
-        dinNodes[currentDIN - 1].data.slots -
-          dinNodes[currentDIN - 1].data.filled <
-          node.data.device.slots &&
-        currentDIN != previousDIN
-      ) {
-        currentDIN += 1;
-        if (currentDIN > selectedEnclosure.totalDIN) currentDIN = 1;
-      }
-      if (currentDIN == previousDIN) {
-        notFitting = true;
-        return;
-      }
-    }
-
-    const x =
-      dinNodes[currentDIN - 1].position.x +
-      17.5 +
-      dinNodes[currentDIN - 1].data.filled * 60;
-    const y = dinNodes[currentDIN - 1].position.y - 50;
-
-    node.position = { x, y };
-
-    node.draggable = false;
-    node.selectable = false;
-    node.deletable = false;
-    node.data.slotted = true;
-    node.connectable = false;
-
-    dinNodes.push(node);
-    dinNodes[currentDIN - 1].data.filled =
-      dinNodes[currentDIN - 1].data.filled + node.data.device.slots;
-
-    const connected = getConnectedEdges([node], edges);
-
-    const connectedSorted = connected.sort((a, b) => {
-      var currentHandleA = "";
-      var currentHandleB = "";
-
-      if (a.source == node.id) currentHandleA = a.sourceHandle!;
-      else currentHandleA = a.targetHandle!;
-
-      if (b.source == node.id) currentHandleB = b.sourceHandle!;
-      else currentHandleB = b.targetHandle!;
-
-      if (currentHandleA.charAt(0) == currentHandleB.charAt(0)) {
-        return (
-          Number(currentHandleA.charAt(1)) - Number(currentHandleB.charAt(1))
-        );
-      }
-
-      if (currentHandleA.charAt(0) == "b") return -1;
-      else return 1;
-    });
-
-    connectedSorted.forEach((connection) => {
-      var nextNode = reactFlowInstance?.getNode(connection.source);
-      if (connection.source == node.id) {
-        nextNode = reactFlowInstance?.getNode(connection.target);
-      }
-      if (!nextNode) return;
-      recursionSlot(nextNode, dinNodes);
-    });
-  };
   const onReturnToDesigner = () => {
     setSelectedEnclosure(undefined);
     wiringNodes.forEach((node) => {
@@ -553,7 +406,6 @@ export function Diagram({
         deleteDevice={deleteDevice}
         totalPowerLoss={totalPowerLoss}
         totalDINSlots={totalDINSlots}
-        setPhaseCount={onSetPhases}
         addToList={addToList}
         nodes={nodes}
         setNodes={setNodes}
@@ -637,183 +489,26 @@ export function Diagram({
             deviceList={deviceList}
           />
         )}
-        <Modal
-          open={enclosureModalOpen}
-          onClose={() => setEnclosureModalOpen(false)}
-          hideBackdrop={true}
-        >
-          <>
-            <Box sx={style}>
-              <Box
-                sx={{
-                  width: "50%",
-                  height: "90%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                {errorEnclosure && (
-                  <Typography sx={{ color: "red" }}>
-                    Could not fit automatically into "{errorEnclosure}"
-                    enclosure
-                  </Typography>
-                )}
-                <TextField
-                  id="placement"
-                  label="Enclosure placement"
-                  variant="filled"
-                  select
-                  required
-                  onChange={handleChange}
-                  sx={{ mb: 1 }}
-                  value={placenment}
-                  SelectProps={{ native: true }}
-                >
-                  {placementOptions.map((input) => (
-                    <option key={input} value={input}>
-                      {input}
-                    </option>
-                  ))}
-                </TextField>
-                <List
-                  sx={{ overflow: "auto" }}
-                  dense
-                  subheader={
-                    <ListSubheader>
-                      <Typography color={"black"}>
-                        Fitting Enclosures
-                      </Typography>
-                    </ListSubheader>
-                  }
-                >
-                  {fittingEnclosures.map((enclosure) => {
-                    return (
-                      <ListItemButton
-                        key={enclosure.id}
-                        selected={selectedEnclosure?.id == enclosure.id}
-                        onClick={() => setSelectedEnclosure(enclosure)}
-                      >
-                        <ListItemIcon sx={{ mr: -4, ml: -2, width: "10px" }}>
-                          {enclosure.isVerified && (
-                            <VerifiedIcon color="primary" />
-                          )}
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={`${enclosure.name} (${enclosure.id})`}
-                        ></ListItemText>
-                      </ListItemButton>
-                    );
-                  })}
-                </List>
-              </Box>
-
-              <Button
-                sx={{
-                  position: "absolute",
-                  bottom: "5px",
-                  left: "10px",
-                }}
-                onClick={() => {
-                  setEnclosureModalOpen(false);
-                  setSelectedEnclosure(undefined);
-                  setPlacement(placementOptions[0]);
-                }}
-              >
-                Cancel
-              </Button>
-
-              {selectedEnclosure && (
-                <Box sx={{ width: "50%" }}>
-                  <List sx={{ width: "100%" }}>
-                    <ListItem
-                      key={"id"}
-                      secondaryAction={
-                        <Typography align="right">
-                          {selectedEnclosure.id}
-                        </Typography>
-                      }
-                    >
-                      <ListItemText>ID:</ListItemText>
-                    </ListItem>
-                    <ListItem
-                      key={"name"}
-                      secondaryAction={
-                        <Typography align="right">
-                          {selectedEnclosure.name}
-                        </Typography>
-                      }
-                    >
-                      <ListItemText>Name:</ListItemText>
-                    </ListItem>
-                    <ListItem
-                      key={"heatDissipation"}
-                      secondaryAction={
-                        <Typography align="right">{`${selectedEnclosure.heatDissipation} W`}</Typography>
-                      }
-                    >
-                      <ListItemText>Heat dissipation:</ListItemText>
-                    </ListItem>
-                    <ListItem
-                      key={"totalDIN"}
-                      secondaryAction={
-                        <Typography align="right">
-                          {selectedEnclosure.totalDIN}
-                        </Typography>
-                      }
-                    >
-                      <ListItemText>DIN rails:</ListItemText>
-                    </ListItem>
-                    <ListItem
-                      key={"oneDINSlots"}
-                      secondaryAction={
-                        <Typography align="right">
-                          {selectedEnclosure.oneDINSlots}
-                        </Typography>
-                      }
-                    >
-                      <ListItemText>Slots on one DIN rail:</ListItemText>
-                    </ListItem>
-                    <ListItem
-                      key={"totalSlots"}
-                      secondaryAction={
-                        <Typography align="right">
-                          {selectedEnclosure.totalSlots}
-                        </Typography>
-                      }
-                    >
-                      <ListItemText>Total slots:</ListItemText>
-                    </ListItem>
-                    <ListItem
-                      key={"link"}
-                      secondaryAction={
-                        <Link
-                          align="right"
-                          href={selectedEnclosure.link!}
-                          target="_blank"
-                        >
-                          {selectedEnclosure.id}
-                        </Link>
-                      }
-                    >
-                      <ListItemText>Link:</ListItemText>
-                    </ListItem>
-                  </List>
-                  <Button
-                    onClick={onConfirmEnclosure}
-                    sx={{
-                      position: "absolute",
-                      bottom: "10px",
-                      right: "10px",
-                    }}
-                    variant="contained"
-                  >
-                    Confirm
-                  </Button>
-                </Box>
-              )}
-            </Box>
-          </>
-        </Modal>
+        <EnclosureSelection
+          enclosureModalOpen={enclosureModalOpen}
+          errorEnclosure={errorEnclosure}
+          fittingEnclosures={fittingEnclosures}
+          handleChange={handleChange}
+          placement={placenment}
+          selectedEnclosure={selectedEnclosure}
+          setEnclosureModalOpen={setEnclosureModalOpen}
+          setPlacement={setPlacement}
+          setSelectedEnclosure={setSelectedEnclosure}
+          edges={edges}
+          nodes={nodes}
+          phase={phase}
+          reactFlowInstance={reactFlowInstance}
+          setEdges={setEdges}
+          setErrorEnclosure={setErrorEnclosure}
+          setNodes={setNodes}
+          setWiringEdges={setWiringEdges}
+          setWiringNodes={setWiringNodes}
+        ></EnclosureSelection>
       </ReactFlowProvider>
     </div>
   );

@@ -27,7 +27,6 @@ type Props = {
   deviceList: Map<IDevice, number>;
   deleteDevice: (device: IDevice) => void;
   totalPowerLoss: number;
-  setPhaseCount: (phase: number) => void;
   totalDINSlots: number;
   addToList: (device: IDevice) => void;
   nodes: CustomNode[];
@@ -63,8 +62,6 @@ export function UsedDevices({
   colorRCD,
   colorSurge,
 }: Props) {
-  
- 
   let keys = Array.from(deviceList.keys());
   let circuitBreakers = Array.from(deviceList.keys()).filter(
     (device) => device.__typename === "CircuitBreaker"
@@ -81,8 +78,6 @@ export function UsedDevices({
   let genericDevices = Array.from(deviceList.keys()).filter(
     (device) => device.__typename === "GenericDevice"
   );
-
-  
 
   return (
     <Box
@@ -137,9 +132,15 @@ export function UsedDevices({
               </Typography>
             </ListSubheader>
           )}
-          {circuitBreakers.map((device: IDevice, i: any) =>
-            <UsedDeviceItem addToList={addToList} deleteDevice={deleteDevice} device={device} deviceList={deviceList} key={`${device.id}${device.__typename}`}></UsedDeviceItem>
-          )}
+          {circuitBreakers.map((device: IDevice, i: any) => (
+            <UsedDeviceItem
+              addToList={addToList}
+              deleteDevice={deleteDevice}
+              device={device}
+              deviceList={deviceList}
+              key={`${device.id}${device.__typename}`}
+            ></UsedDeviceItem>
+          ))}
 
           {RCDs.length > 0 && (
             <ListSubheader sx={{ display: "flex", alignItems: "center" }}>
@@ -153,7 +154,15 @@ export function UsedDevices({
               <Typography sx={{ fontSize: "15px" }}>RCDs </Typography>
             </ListSubheader>
           )}
-          {RCDs.map((device: IDevice, i: any) => <UsedDeviceItem addToList={addToList} deleteDevice={deleteDevice} device={device} deviceList={deviceList}  key={`${device.id}${device.__typename}`} ></UsedDeviceItem>)}
+          {RCDs.map((device: IDevice, i: any) => (
+            <UsedDeviceItem
+              addToList={addToList}
+              deleteDevice={deleteDevice}
+              device={device}
+              deviceList={deviceList}
+              key={`${device.id}${device.__typename}`}
+            ></UsedDeviceItem>
+          ))}
 
           {surgeProtectors.length > 0 && (
             <ListSubheader sx={{ display: "flex", alignItems: "center" }}>
@@ -169,9 +178,15 @@ export function UsedDevices({
               </Typography>
             </ListSubheader>
           )}
-          {surgeProtectors.map((device: IDevice, i: any) =>
-            <UsedDeviceItem addToList={addToList} deleteDevice={deleteDevice} device={device} deviceList={deviceList}  key={`${device.id}${device.__typename}`}></UsedDeviceItem>
-          )}
+          {surgeProtectors.map((device: IDevice, i: any) => (
+            <UsedDeviceItem
+              addToList={addToList}
+              deleteDevice={deleteDevice}
+              device={device}
+              deviceList={deviceList}
+              key={`${device.id}${device.__typename}`}
+            ></UsedDeviceItem>
+          ))}
 
           {PLCs.length > 0 && (
             <ListSubheader sx={{ display: "flex", alignItems: "center" }}>
@@ -185,7 +200,15 @@ export function UsedDevices({
               <Typography sx={{ fontSize: "15px" }}>PLCs</Typography>
             </ListSubheader>
           )}
-          {PLCs.map((device: IDevice, i: any) => <UsedDeviceItem addToList={addToList} deleteDevice={deleteDevice} device={device} deviceList={deviceList} key={`${device.id}${device.__typename}`}></UsedDeviceItem>)}
+          {PLCs.map((device: IDevice, i: any) => (
+            <UsedDeviceItem
+              addToList={addToList}
+              deleteDevice={deleteDevice}
+              device={device}
+              deviceList={deviceList}
+              key={`${device.id}${device.__typename}`}
+            ></UsedDeviceItem>
+          ))}
 
           {genericDevices.length > 0 && (
             <ListSubheader sx={{ display: "flex", alignItems: "center" }}>
@@ -199,9 +222,15 @@ export function UsedDevices({
               <Typography sx={{ fontSize: "15px" }}>Generic devices</Typography>
             </ListSubheader>
           )}
-          {genericDevices.map((device: IDevice, i: any) =>
-            <UsedDeviceItem addToList={addToList} deleteDevice={deleteDevice} device={device} deviceList={deviceList} key={`${device.id}${device.__typename}`}></UsedDeviceItem>
-          )}
+          {genericDevices.map((device: IDevice, i: any) => (
+            <UsedDeviceItem
+              addToList={addToList}
+              deleteDevice={deleteDevice}
+              device={device}
+              deviceList={deviceList}
+              key={`${device.id}${device.__typename}`}
+            ></UsedDeviceItem>
+          ))}
 
           {keys.length == 0 && (
             <>
