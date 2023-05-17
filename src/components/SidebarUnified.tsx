@@ -58,7 +58,7 @@ export function SidebarUnified({
     <Box
       sx={{
         width: "15%",
-        minWidth: "200px",
+        minWidth: "250px",
         background: "background.paper",
         overflow: "auto",
         boxShadow: 24,
