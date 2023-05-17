@@ -145,6 +145,7 @@ export function DownloadDocument({
       },
       image: {
         border: `1px solid #000`,
+        margin: 10
       },
     });
 
@@ -226,124 +227,160 @@ export function DownloadDocument({
           <View style={styles.section}>
             <View>
               <Text style={styles.header}>Device list</Text>
-              <Text style={styles.subheader}>Circuit breakers</Text>
-              <View style={{ ...styles.devicePart, paddingBottom: 5 }}>
-                <Text style={styles.quantity}>Qty</Text>
-                <Text style={styles.description}>Description</Text>
-              </View>
 
-              {circuitBreakers.map((device) => {
-                return (
-                  <View style={styles.devicePart}>
-                    <Text style={styles.deviceCount}>
-                      {deviceList.get(device)}
-                    </Text>
-                    {device.__typename == "CircuitBreaker" && (
-                      <Text style={styles.device}>
-                        {device.id}, {device.name}, {device.ratedCurrent}A,{" "}
-                        {device.type}, {device.poleCount} Pole,{" "}
-                        {device.powerLoss}W, {device.maxTemp}°C
-                      </Text>
-                    )}
+              {circuitBreakers.length > 0 && (
+                <>
+                  <Text style={styles.subheader}>Circuit breakers</Text>
+                  <View style={{ ...styles.devicePart, paddingBottom: 5 }}>
+                    <Text style={styles.quantity}>Qty</Text>
+                    <Text style={styles.description}>Description</Text>
                   </View>
-                );
-              })}
 
-              <Text style={{ ...styles.subheader, paddingTop: 20 }}>RCDs</Text>
-              <View style={{ ...styles.devicePart, paddingBottom: 5 }}>
-                <Text style={styles.quantity}>Qty</Text>
-                <Text style={styles.description}>Description</Text>
-              </View>
+                  {circuitBreakers.map((device) => {
+                    if (Number(deviceList.get(device)!) > 0) {
+                      return (
+                        <View style={styles.devicePart}>
+                          <Text style={styles.deviceCount}>
+                            {deviceList.get(device)}
+                          </Text>
+                          {device.__typename == "CircuitBreaker" && (
+                            <Text style={styles.device}>
+                              {device.id}, {device.name}, {device.ratedCurrent}
+                              A, {device.type}, {device.poleCount} Pole, 6kA,{" "}
+                              {device.powerLoss}W, {device.maxTemp}°C
+                            </Text>
+                          )}
+                        </View>
+                      );
+                    }
+                  })}
+                </>
+              )}
 
-              {RCDs.map((device) => {
-                return (
-                  <View style={styles.devicePart}>
-                    <Text style={styles.deviceCount}>
-                      {deviceList.get(device)}
-                    </Text>
-                    {device.__typename == "RCD" && (
-                      <Text style={styles.device}>
-                        {device.id}, {device.name}, {device.ratedCurrent}A,{" "}
-                        {device.ratedResidualCurrent}mA, {device.currentType},{" "}
-                        {device.breakTimeType}, {device.poleCount} Pole,{" "}
-                        {device.powerLoss}W, {device.maxTemp}°C
-                      </Text>
-                    )}
+              {RCDs.length > 0 && (
+                <>
+                  <Text style={{ ...styles.subheader, paddingTop: 20 }}>
+                    RCDs
+                  </Text>
+                  <View style={{ ...styles.devicePart, paddingBottom: 5 }}>
+                    <Text style={styles.quantity}>Qty</Text>
+                    <Text style={styles.description}>Description</Text>
                   </View>
-                );
-              })}
 
-              <Text style={{ ...styles.subheader, paddingTop: 20 }}>
-                Surge protectors
-              </Text>
-              <View style={{ ...styles.devicePart, paddingBottom: 5 }}>
-                <Text style={styles.quantity}>Qty</Text>
-                <Text style={styles.description}>Description</Text>
-              </View>
+                  {RCDs.map((device) => {
+                    if (Number(deviceList.get(device)!) > 0) {
+                      return (
+                        <View style={styles.devicePart}>
+                          <Text style={styles.deviceCount}>
+                            {deviceList.get(device)}
+                          </Text>
+                          {device.__typename == "RCD" && (
+                            <Text style={styles.device}>
+                              {device.id}, {device.name}, {device.ratedCurrent}
+                              A, {device.ratedResidualCurrent}mA,{" "}
+                              {device.currentType}, {device.breakTimeType},{" "}
+                              {device.poleCount} Pole, 6kA, {device.powerLoss}W,{" "}
+                              {device.maxTemp}°C
+                            </Text>
+                          )}
+                        </View>
+                      );
+                    }
+                  })}
+                </>
+              )}
 
-              {surgeProtectors.map((device) => {
-                return (
-                  <View style={styles.devicePart}>
-                    <Text style={styles.deviceCount}>
-                      {deviceList.get(device)}
-                    </Text>
-                    {device.__typename == "SurgeProtector" && (
-                      <Text style={styles.device}>
-                        {device.id}, {device.name}, {device.type},{" "}
-                        {device.powerLoss}W, {device.maxTemp}°C
-                      </Text>
-                    )}
+              {surgeProtectors.length > 0 && (
+                <>
+                  <Text style={{ ...styles.subheader, paddingTop: 20 }}>
+                    Surge protectors
+                  </Text>
+                  <View style={{ ...styles.devicePart, paddingBottom: 5 }}>
+                    <Text style={styles.quantity}>Qty</Text>
+                    <Text style={styles.description}>Description</Text>
                   </View>
-                );
-              })}
 
-              <Text style={{ ...styles.subheader, paddingTop: 20 }}>PLCs</Text>
-              <View style={{ ...styles.devicePart, paddingBottom: 5 }}>
-                <Text style={styles.quantity}>Qty</Text>
-                <Text style={styles.description}>Description</Text>
-              </View>
+                  {surgeProtectors.map((device) => {
+                    if (Number(deviceList.get(device)!) > 0) {
+                      return (
+                        <View style={styles.devicePart}>
+                          <Text style={styles.deviceCount}>
+                            {deviceList.get(device)}
+                          </Text>
+                          {device.__typename == "SurgeProtector" && (
+                            <Text style={styles.device}>
+                              {device.id}, {device.name}, {device.type},{" "}
+                              {device.powerLoss}W, {device.maxTemp}°C
+                            </Text>
+                          )}
+                        </View>
+                      );
+                    }
+                  })}
+                </>
+              )}
 
-              {PLCs.map((device) => {
-                return (
-                  <View style={styles.devicePart}>
-                    <Text style={styles.deviceCount}>
-                      {deviceList.get(device)}
-                    </Text>
-                    {device.__typename == "PLC" && (
-                      <Text style={styles.device}>
-                        {device.id}, {device.name}, {device.digitalIn} DI,{" "}
-                        {device.digitalOut} DO, {device.analogIn} AI,{" "}
-                        {device.analogOut} AO, {device.powerLoss}W,{" "}
-                        {device.maxTemp}°C
-                      </Text>
-                    )}
+              {PLCs.length > 0 && (
+                <>
+                  <Text style={{ ...styles.subheader, paddingTop: 20 }}>
+                    PLCs
+                  </Text>
+                  <View style={{ ...styles.devicePart, paddingBottom: 5 }}>
+                    <Text style={styles.quantity}>Qty</Text>
+                    <Text style={styles.description}>Description</Text>
                   </View>
-                );
-              })}
 
-              <Text style={{ ...styles.subheader, paddingTop: 20 }}>
-                Generic devices
-              </Text>
-              <View style={{ ...styles.devicePart, paddingBottom: 5 }}>
-                <Text style={styles.quantity}>Qty</Text>
-                <Text style={styles.description}>Description</Text>
-              </View>
+                  {PLCs.map((device) => {
+                    if (Number(deviceList.get(device)!) > 0) {
+                      return (
+                        <View style={styles.devicePart}>
+                          <Text style={styles.deviceCount}>
+                            {deviceList.get(device)}
+                          </Text>
+                          {device.__typename == "PLC" && (
+                            <Text style={styles.device}>
+                              {device.id}, {device.name}, {device.digitalIn} DI,{" "}
+                              {device.digitalOut} DO, {device.analogIn} AI,{" "}
+                              {device.analogOut} AO, {device.powerLoss}W,{" "}
+                              {device.maxTemp}°C
+                            </Text>
+                          )}
+                        </View>
+                      );
+                    }
+                  })}
+                </>
+              )}
 
-              {genericDevices.map((device) => {
-                return (
-                  <View style={styles.devicePart}>
-                    <Text style={styles.deviceCount}>
-                      {deviceList.get(device)}
-                    </Text>
-                    {device.__typename == "GenericDevice" && (
-                      <Text style={styles.device}>
-                        {device.id}, {device.name}, {device.powerLoss}W,{" "}
-                        {device.maxTemp}°C
-                      </Text>
-                    )}
+              {genericDevices.length > 0 && (
+                <>
+                  <Text style={{ ...styles.subheader, paddingTop: 20 }}>
+                    Generic devices
+                  </Text>
+                  <View style={{ ...styles.devicePart, paddingBottom: 5 }}>
+                    <Text style={styles.quantity}>Qty</Text>
+                    <Text style={styles.description}>Description</Text>
                   </View>
-                );
-              })}
+
+                  {genericDevices.map((device) => {
+                    if (Number(deviceList.get(device)!) > 0) {
+                      return (
+                        <View style={styles.devicePart}>
+                          <Text style={styles.deviceCount}>
+                            {deviceList.get(device)}
+                          </Text>
+                          {device.__typename == "GenericDevice" && (
+                            <Text style={styles.device}>
+                              {device.id}, {device.name}, {device.powerLoss}W,{" "}
+                              {device.maxTemp}°C
+                            </Text>
+                          )}
+                        </View>
+                      );
+                    }
+                  })}
+                </>
+              )}
 
               <View style={styles.section}>
                 <Image src={wiringDiagram} style={styles.image} />
