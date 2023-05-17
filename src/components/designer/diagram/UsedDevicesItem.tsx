@@ -33,7 +33,7 @@ export function UsedDeviceItem({
     device: IDevice,
     key: string
   ) => {
-    event.dataTransfer.setData("application/reactflow", JSON.stringify(device));
+    event.dataTransfer.setData("application/reactflow", JSON.stringify(device)); 
     event.dataTransfer.effectAllowed = "move";
   };
 

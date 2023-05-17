@@ -83,7 +83,7 @@ export function DeviceNode({ data }: NodeProps<NodeData>) {
 
   const style = {
     background: `${data.color}`,
-    color: `#000`,
+    color: `#000`, 
     width: `${data.device.slots * 60}px`,
     height: `${200}px`,
     borderStyle: "solid",
