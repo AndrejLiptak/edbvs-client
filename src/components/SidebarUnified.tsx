@@ -1,5 +1,6 @@
 import {
   Autocomplete,
+  Box,
   Button,
   IconButton,
   List,
@@ -15,7 +16,13 @@ import { IDevice, UserWithoutDevices } from "../types";
 import AddIcon from "@mui/icons-material/Add";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { CircuitBreaker, GenericDevice, Plc, Rcd, SurgeProtector } from "../graphql/generated";
+import {
+  CircuitBreaker,
+  GenericDevice,
+  Plc,
+  Rcd,
+  SurgeProtector,
+} from "../graphql/generated";
 import { SidebarCircuit } from "./SidebarCircuit";
 import { SidebarRCD } from "./SidebarRCD";
 import { SidebarSurge } from "./SidebarSurge";
@@ -28,30 +35,39 @@ type Props = {
   addToList: (device: IDevice) => void;
 
   all: IDevice[];
-  circuitBreakers: CircuitBreaker[]
-  RCDs: Rcd[]
-  surgeProtectors: SurgeProtector[]
-  PLCs: Plc[]
-  genericDevices: GenericDevice[]
+  circuitBreakers: CircuitBreaker[];
+  RCDs: Rcd[];
+  surgeProtectors: SurgeProtector[];
+  PLCs: Plc[];
+  genericDevices: GenericDevice[];
 };
 
-export function SidebarUnified({  addToList,  all, circuitBreakers, RCDs, surgeProtectors, PLCs, genericDevices }: Props) {
-  const [open, setOpen] = useState(false)
-  const [device, setDevice] = useState<IDevice|undefined>()
-
+export function SidebarUnified({
+  addToList,
+  all,
+  circuitBreakers,
+  RCDs,
+  surgeProtectors,
+  PLCs,
+  genericDevices,
+}: Props) {
+  const [open, setOpen] = useState(false);
+  const [device, setDevice] = useState<IDevice | undefined>();
 
   return (
-    <div style={{          width: '25%',
-    minWidth: '250px',
-    maxWidth: '400px',
-    background: "background.paper",
-    overflow: "auto",
-    boxShadow: '10px 10px 8px #999999',
-    paddingTop: '50px',
-    minHeight: '400px',
-    display: 'flex',
-    flexGrow: 1,
-    flexDirection: 'column',}}>
+    <Box
+      sx={{
+        width: "15%",
+        minWidth: "200px",
+        background: "background.paper",
+        overflow: "auto",
+        boxShadow: 24,
+        paddingTop: "50px",
+        minHeight: "400px",
+
+        flexDirection: "column",
+      }}
+    >
       <List
         aria-labelledby="nested-list-subheader"
         dense
@@ -62,12 +78,6 @@ export function SidebarUnified({  addToList,  all, circuitBreakers, RCDs, surgeP
             </Typography>
           </ListSubheader>
         }
-        sx={{
-
-         
-          
-          
-        }}
       >
         <Autocomplete
           key={"searchbar"}
@@ -75,34 +85,34 @@ export function SidebarUnified({  addToList,  all, circuitBreakers, RCDs, surgeP
           id="search"
           options={all}
           renderOption={(props, option, { selected }) => {
-
             return (
               <>
-              <ListItem
-              key={option.__typename + option.id}
-                secondaryAction={
-                  <IconButton sx={{mr: -3, ml: -3}} onClick={() => addToList(option)} >
-                    <AddCircleOutlineIcon color="success" />
-                  </IconButton>
-                }
-              >
-                <ListItemIcon sx={{mr: -6, ml: -1, width: '10px'}}>
-                  {option.isVerified && <VerifiedIcon color="secondary" />}
-                </ListItemIcon>
-                <ListItemButton
-                  onClick={() => {
-                    setOpen(true);
-                    setDevice(option)
-                  }}
+                <ListItem
+                  key={option.__typename + option.id}
+                  secondaryAction={
+                    <IconButton
+                      sx={{ mr: -3, ml: -3 }}
+                      onClick={() => addToList(option)}
+                    >
+                      <AddCircleOutlineIcon color="success" />
+                    </IconButton>
+                  }
                 >
-                  
-                  <ListItemText
-                    style={{wordWrap: "break-word"}}
-                    primary={` ${option.name} (${option.id})`}
-                  ></ListItemText>
-                </ListItemButton>
-              </ListItem>
-            
+                  <ListItemIcon sx={{ mr: -6, ml: -1, width: "10px" }}>
+                    {option.isVerified && <VerifiedIcon color="secondary" />}
+                  </ListItemIcon>
+                  <ListItemButton
+                    onClick={() => {
+                      setOpen(true);
+                      setDevice(option);
+                    }}
+                  >
+                    <ListItemText
+                      style={{ wordWrap: "break-word" }}
+                      primary={` ${option.name} (${option.id})`}
+                    ></ListItemText>
+                  </ListItemButton>
+                </ListItem>
               </>
             );
           }}
@@ -124,14 +134,29 @@ export function SidebarUnified({  addToList,  all, circuitBreakers, RCDs, surgeP
           clearIcon={<></>}
           disableCloseOnSelect={true}
         />
-        <SidebarCircuit addToList={addToList} circuitBreakers={circuitBreakers}></SidebarCircuit>
-        <SidebarRCD RCDs={RCDs} addToList={addToList} ></SidebarRCD>
-        <SidebarSurge addToList={addToList} surgeProtectors={surgeProtectors} ></SidebarSurge>
-        <SidebarPLC addToList={addToList} PLCs={PLCs} ></SidebarPLC>
-        <SidebarGeneric addToList={addToList} genericDevices={genericDevices} ></SidebarGeneric>
-        {open && (<DeviceDetail  addToList={addToList} device={device!} openIn={open} handleClose={setOpen}/>)}
-
+        <SidebarCircuit
+          addToList={addToList}
+          circuitBreakers={circuitBreakers}
+        ></SidebarCircuit>
+        <SidebarRCD RCDs={RCDs} addToList={addToList}></SidebarRCD>
+        <SidebarSurge
+          addToList={addToList}
+          surgeProtectors={surgeProtectors}
+        ></SidebarSurge>
+        <SidebarPLC addToList={addToList} PLCs={PLCs}></SidebarPLC>
+        <SidebarGeneric
+          addToList={addToList}
+          genericDevices={genericDevices}
+        ></SidebarGeneric>
+        {open && (
+          <DeviceDetail
+            addToList={addToList}
+            device={device!}
+            openIn={open}
+            handleClose={setOpen}
+          />
+        )}
       </List>
-    </div>
+    </Box>
   );
 }
