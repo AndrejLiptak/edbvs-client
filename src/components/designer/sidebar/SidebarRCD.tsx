@@ -1,16 +1,9 @@
-import {
-  Collapse,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-} from "@mui/material";
-import { CircuitBreaker, Rcd, User } from "../../../graphql/generated";
-import { useState } from "react";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { Collapse, ListItemButton, ListItemText } from "@mui/material";
+import { useState } from "react";
+import { Rcd } from "../../../graphql/generated";
+import { IDevice } from "../../../types";
 import { SidebarItem } from "./SidebarItem";
-import { IDevice, UserWithoutDevices } from "../../../types";
-import { SidebarPole } from "./SidebarCircuitPole";
 
 type Props = {
   RCDs: Rcd[];

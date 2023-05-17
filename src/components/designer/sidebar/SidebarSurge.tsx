@@ -1,9 +1,8 @@
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Collapse, ListItemButton, ListItemText } from "@mui/material";
 import { useState } from "react";
-import { CircuitBreaker, SurgeProtector } from "../../../graphql/generated";
-import { IDevice, UserWithoutDevices } from "../../../types";
-import { SidebarPole } from "./SidebarCircuitPole";
+import { SurgeProtector } from "../../../graphql/generated";
+import { IDevice } from "../../../types";
 import { SidebarSurgeType } from "./SidebarSurgeType";
 
 type Props = {
@@ -49,12 +48,36 @@ export function SidebarSurge({ surgeProtectors, addToList }: Props) {
         <ListItemText primary="Surge protectors" />
       </ListItemButton>
       <Collapse in={open}>
-        <SidebarSurgeType addToList={addToList} type="Type B" surgeProtectors={typeB} ></SidebarSurgeType>
-        <SidebarSurgeType addToList={addToList} type="Type C" surgeProtectors={typeC} ></SidebarSurgeType>
-        <SidebarSurgeType addToList={addToList} type="Type D" surgeProtectors={typeD} ></SidebarSurgeType>
-        <SidebarSurgeType addToList={addToList} type="Type B+C" surgeProtectors={typeBC} ></SidebarSurgeType>
-        <SidebarSurgeType addToList={addToList} type="Type B+C+D" surgeProtectors={typeBCD} ></SidebarSurgeType>
-        <SidebarSurgeType addToList={addToList} type="Type C+D" surgeProtectors={typeCD} ></SidebarSurgeType>
+        <SidebarSurgeType
+          addToList={addToList}
+          type="Type B"
+          surgeProtectors={typeB}
+        ></SidebarSurgeType>
+        <SidebarSurgeType
+          addToList={addToList}
+          type="Type C"
+          surgeProtectors={typeC}
+        ></SidebarSurgeType>
+        <SidebarSurgeType
+          addToList={addToList}
+          type="Type D"
+          surgeProtectors={typeD}
+        ></SidebarSurgeType>
+        <SidebarSurgeType
+          addToList={addToList}
+          type="Type B+C"
+          surgeProtectors={typeBC}
+        ></SidebarSurgeType>
+        <SidebarSurgeType
+          addToList={addToList}
+          type="Type B+C+D"
+          surgeProtectors={typeBCD}
+        ></SidebarSurgeType>
+        <SidebarSurgeType
+          addToList={addToList}
+          type="Type C+D"
+          surgeProtectors={typeCD}
+        ></SidebarSurgeType>
       </Collapse>
     </div>
   );

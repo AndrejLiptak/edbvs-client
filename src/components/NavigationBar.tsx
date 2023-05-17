@@ -72,7 +72,7 @@ export function NavigationBar() {
         color="primary"
         sx={{
           height: "50px",
-          
+
           position: "fixed",
         }}
       >

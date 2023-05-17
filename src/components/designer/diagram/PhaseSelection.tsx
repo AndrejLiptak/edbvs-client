@@ -1,7 +1,7 @@
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { useState } from "react";
-import onePhase from '../../../images/1phase.png'
-import threePhase from '../../../images/3phase.png'
+import onePhase from "../../../images/1phase.png";
+import threePhase from "../../../images/3phase.png";
 
 type Props = {
   setPhaseCount: (device: number) => void;
@@ -32,7 +32,6 @@ export function PhaseSelection({ setPhaseCount, phase }: Props) {
           bottom: "20px",
           right: "12rem",
           width: "10rem",
-
         }}
       >
         Phase Select (Reset)
@@ -45,14 +44,15 @@ export function PhaseSelection({ setPhaseCount, phase }: Props) {
         hideBackdrop={true}
       >
         <Box sx={style}>
-          <Typography  align="center" variant="h6">
+          <Typography align="center" variant="h6">
             Select number of phases
           </Typography>
-          {phase && (<Typography align="center" sx={{color: '#ff9800'}}>
-            WARNING: This will reset your diagram
-          </Typography>)}
+          {phase && (
+            <Typography align="center" sx={{ color: "#ff9800" }}>
+              WARNING: This will reset your diagram
+            </Typography>
+          )}
           <Button
-          
             onClick={() => {
               setPhaseCount(1);
               setOpen(false);
@@ -68,13 +68,15 @@ export function PhaseSelection({ setPhaseCount, phase }: Props) {
           >
             <img src={threePhase}></img>
           </Button>
-          {phase && (<Button
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            cancel
-          </Button>)}
+          {phase && (
+            <Button
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              cancel
+            </Button>
+          )}
         </Box>
       </Modal>
     </>

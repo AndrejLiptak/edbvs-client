@@ -3,7 +3,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
   Button,
-  CircularProgress,
   IconButton,
   InputAdornment,
   Link,
@@ -25,10 +24,10 @@ import {
   useDeletePlcMutation,
   usePostPlcMutation,
 } from "../../../graphql/generated";
-import "../../../styles/main.css"
+import "../../../styles/main.css";
 import { allowedArray, fieldLength } from "../../../types";
-import { CreateDeviceMessage } from "./CreateDeviceMessage";
 import { Log } from "../Log";
+import { CreateDeviceMessage } from "./CreateDeviceMessage";
 
 type Props = {
   PLCs: Plc[];
@@ -65,8 +64,8 @@ export function ProfilePLCs({ PLCs, userEmail, isAdmin }: Props) {
   const [log, setLog] = useState<string[]>([]);
 
   useEffect(() => {
-    setDeviceModify({...deviceModify, userEmail: userEmail})
-  }, [userEmail])
+    setDeviceModify({ ...deviceModify, userEmail: userEmail });
+  }, [userEmail]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -99,7 +98,6 @@ export function ProfilePLCs({ PLCs, userEmail, isAdmin }: Props) {
     postGenericDevice(variables).then((result) => {
       setPosting(false);
       if (!result.error) {
-      
         setError(false);
         setSuccess(true);
         setDeviceModify({
@@ -172,7 +170,12 @@ export function ProfilePLCs({ PLCs, userEmail, isAdmin }: Props) {
       type: "string",
       hideable: false,
     },
-    { field: "name", headerName: "Name", width: fieldLength.get("name"), type: "string" },
+    {
+      field: "name",
+      headerName: "Name",
+      width: fieldLength.get("name"),
+      type: "string",
+    },
     {
       field: "powerLoss",
       headerName: "Power Loss (W)",
@@ -209,10 +212,22 @@ export function ProfilePLCs({ PLCs, userEmail, isAdmin }: Props) {
       width: fieldLength.get("analogOut"),
       type: "number",
     },
-    { field: "slots", headerName: "Slots", width: fieldLength.get("slots"), type: "number" },
-    { field: "link", headerName: "Link", width: fieldLength.get("link"), renderCell: (params) => (
-      <Link href={params.value} target="_blank">{params.value}</Link>
-    ) },
+    {
+      field: "slots",
+      headerName: "Slots",
+      width: fieldLength.get("slots"),
+      type: "number",
+    },
+    {
+      field: "link",
+      headerName: "Link",
+      width: fieldLength.get("link"),
+      renderCell: (params) => (
+        <Link href={params.value} target="_blank">
+          {params.value}
+        </Link>
+      ),
+    },
   ];
 
   function checkCorrectFile(data: object) {
@@ -228,7 +243,7 @@ export function ProfilePLCs({ PLCs, userEmail, isAdmin }: Props) {
       "AI",
       "AO",
       "Slots",
-      "Link"
+      "Link",
     ];
 
     if (keys.length != 10) return false;
@@ -287,15 +302,11 @@ export function ProfilePLCs({ PLCs, userEmail, isAdmin }: Props) {
       }
       if (String(device[id]).length > 10) {
         correct = false;
-        tempLog.push(
-          `PLC "${device[id]}" has id value too long`
-        );
+        tempLog.push(`PLC "${device[id]}" has id value too long`);
       }
       if (String(device[name]).length > 40) {
         correct = false;
-        tempLog.push(
-          `PLC "${device[id]}" has name value too long`
-        );
+        tempLog.push(`PLC "${device[id]}" has name value too long`);
       }
       if (correct) correcDevices.push(device);
     });
@@ -387,7 +398,7 @@ export function ProfilePLCs({ PLCs, userEmail, isAdmin }: Props) {
         "AI",
         "AO",
         "Slots",
-        "Link"
+        "Link",
       ],
     };
     const csvExporter = new ExportToCsv(options);
@@ -397,7 +408,7 @@ export function ProfilePLCs({ PLCs, userEmail, isAdmin }: Props) {
   const [deleteGenericDeviceResult, deleteGenericDevice] =
     useDeletePlcMutation();
 
- // if (uploading) return <CircularProgress></CircularProgress>;
+  // if (uploading) return <CircularProgress></CircularProgress>;
 
   return (
     <>
@@ -438,7 +449,9 @@ export function ProfilePLCs({ PLCs, userEmail, isAdmin }: Props) {
               sx={{ pr: 1, width: "30%" }}
               onChange={handleChange}
               value={deviceModify.id}
-              InputProps={{ inputProps: { autoComplete: "off", maxLength: 10 } }}
+              InputProps={{
+                inputProps: { autoComplete: "off", maxLength: 10 },
+              }}
             />
             <TextField
               id="name"
@@ -448,7 +461,9 @@ export function ProfilePLCs({ PLCs, userEmail, isAdmin }: Props) {
               sx={{ width: "68%" }}
               onChange={handleChange}
               value={deviceModify.name}
-              InputProps={{ inputProps: { autoComplete: "off", maxLength: 40 } }}
+              InputProps={{
+                inputProps: { autoComplete: "off", maxLength: 40 },
+              }}
             />
           </div>
           <div className="section">
@@ -581,8 +596,7 @@ export function ProfilePLCs({ PLCs, userEmail, isAdmin }: Props) {
               onChange={handleChange}
               value={deviceModify.link}
               type="string"
-              sx={{ width: '100%' }}
-            
+              sx={{ width: "100%" }}
             />
           </div>
           <Button

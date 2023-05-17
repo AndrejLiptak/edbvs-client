@@ -3,7 +3,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
   Button,
-  CircularProgress,
   IconButton,
   InputAdornment,
   Link,
@@ -25,10 +24,10 @@ import {
   useDeleteRcdMutation,
   usePostRcdMutation,
 } from "../../../graphql/generated";
-import "../../../styles/main.css"
-import { CreateDeviceMessage } from "./CreateDeviceMessage";
-import { Log } from "../Log";
+import "../../../styles/main.css";
 import { fieldLength } from "../../../types";
+import { Log } from "../Log";
+import { CreateDeviceMessage } from "./CreateDeviceMessage";
 type Props = {
   RCDs: Rcd[];
   userEmail: string;
@@ -39,8 +38,8 @@ export function ProfileRCD({ RCDs, userEmail, isAdmin }: Props) {
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState(RCDs ?? []);
   useEffect(() => {
-    if (rows.length == 0) setRows(RCDs ?? [])
-  },[RCDs])
+    if (rows.length == 0) setRows(RCDs ?? []);
+  }, [RCDs]);
   const [deviceModify, setDeviceModify] = useState({
     id: "",
     name: "",
@@ -64,8 +63,8 @@ export function ProfileRCD({ RCDs, userEmail, isAdmin }: Props) {
   const [log, setLog] = useState<string[]>([]);
 
   useEffect(() => {
-    setDeviceModify({...deviceModify, userEmail: userEmail})
-  }, [userEmail])
+    setDeviceModify({ ...deviceModify, userEmail: userEmail });
+  }, [userEmail]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
@@ -104,7 +103,6 @@ export function ProfileRCD({ RCDs, userEmail, isAdmin }: Props) {
       ratedResidualCurrent: parseFloat(deviceModify.ratedResidualCurrent),
       isVerified: isAdmin,
     };
-
 
     postRCD(variables).then((result) => {
       setPosting(false);
@@ -181,7 +179,12 @@ export function ProfileRCD({ RCDs, userEmail, isAdmin }: Props) {
       type: "string",
       hideable: false,
     },
-    { field: "name", headerName: "Name", width: fieldLength.get("name"), type: "string" },
+    {
+      field: "name",
+      headerName: "Name",
+      width: fieldLength.get("name"),
+      type: "string",
+    },
     {
       field: "poleCount",
       headerName: "Pole Count",
@@ -225,10 +228,16 @@ export function ProfileRCD({ RCDs, userEmail, isAdmin }: Props) {
       width: fieldLength.get("maxTemp"),
       type: "number",
     },
-    { field: "link", headerName: "Link", width: fieldLength.get("link"), renderCell: (params) => (
-      <Link href={params.value} target="_blank">{params.value}</Link>
-    ) },
-    
+    {
+      field: "link",
+      headerName: "Link",
+      width: fieldLength.get("link"),
+      renderCell: (params) => (
+        <Link href={params.value} target="_blank">
+          {params.value}
+        </Link>
+      ),
+    },
   ];
 
   function checkCorrectFile(data: object) {
@@ -244,7 +253,7 @@ export function ProfileRCD({ RCDs, userEmail, isAdmin }: Props) {
       "Current Type",
       "Pole Count",
       "Break Time Type",
-      "Link"
+      "Link",
     ];
     if (keys.length != 10) return false;
     const hasAllValues = keys.every((value) => expected.includes(value));
@@ -313,15 +322,11 @@ export function ProfileRCD({ RCDs, userEmail, isAdmin }: Props) {
       }
       if (String(device[id]).length > 10) {
         correct = false;
-        tempLog.push(
-          `RCD "${device[id]}" has id value too long`
-        );
+        tempLog.push(`RCD "${device[id]}" has id value too long`);
       }
       if (String(device[name]).length > 40) {
         correct = false;
-        tempLog.push(
-          `RCD "${device[id]}" has name value too long`
-        );
+        tempLog.push(`RCD "${device[id]}" has name value too long`);
       }
       if (correct) correcDevices.push(device);
     });
@@ -427,7 +432,7 @@ export function ProfileRCD({ RCDs, userEmail, isAdmin }: Props) {
         "Break Time Type",
         "Power Loss (W)",
         "Maximum Temperature (°C)",
-        "Link"
+        "Link",
       ],
     };
     const csvExporter = new ExportToCsv(options);
@@ -436,7 +441,7 @@ export function ProfileRCD({ RCDs, userEmail, isAdmin }: Props) {
   const [postRCDResult, postRCD] = usePostRcdMutation();
   const [deleteRCDResult, deleteRCD] = useDeleteRcdMutation();
 
-//  if (uploading) return <CircularProgress></CircularProgress>;
+  //  if (uploading) return <CircularProgress></CircularProgress>;
 
   return (
     <>
@@ -477,7 +482,9 @@ export function ProfileRCD({ RCDs, userEmail, isAdmin }: Props) {
               sx={{ pr: 1, width: "30%" }}
               onChange={handleChange}
               value={deviceModify.id}
-              InputProps={{ inputProps: { autoComplete: "off", maxLength: 10 } }}
+              InputProps={{
+                inputProps: { autoComplete: "off", maxLength: 10 },
+              }}
             />
             <TextField
               id="name"
@@ -487,7 +494,9 @@ export function ProfileRCD({ RCDs, userEmail, isAdmin }: Props) {
               sx={{ width: "68%" }}
               onChange={handleChange}
               value={deviceModify.name}
-              InputProps={{ inputProps: { autoComplete: "off", maxLength: 40 } }}
+              InputProps={{
+                inputProps: { autoComplete: "off", maxLength: 40 },
+              }}
             />
           </div>
           <div className="section">
@@ -617,8 +626,7 @@ export function ProfileRCD({ RCDs, userEmail, isAdmin }: Props) {
               onChange={handleChange}
               value={deviceModify.link}
               type="string"
-              sx={{ width: '100%' }}
-            
+              sx={{ width: "100%" }}
             />
           </div>
           <Button
@@ -640,7 +648,7 @@ export function ProfileRCD({ RCDs, userEmail, isAdmin }: Props) {
           onRowSelectionModelChange={(ids) => {
             setRowSelectionModel(ids);
           }}
-          loading = {RCDs === undefined || uploading}
+          loading={RCDs === undefined || uploading}
           slots={{ toolbar: GridToolbar }}
           density="compact"
         ></DataGrid>

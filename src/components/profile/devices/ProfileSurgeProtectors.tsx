@@ -3,7 +3,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Box,
   Button,
-  CircularProgress,
   IconButton,
   InputAdornment,
   Link,
@@ -25,10 +24,10 @@ import {
   useDeleteSurgeProtectorMutation,
   usePostSurgeProtectorMutation,
 } from "../../../graphql/generated";
-import "../../../styles/main.css"
+import "../../../styles/main.css";
 import { allowedArray, fieldLength } from "../../../types";
-import { CreateDeviceMessage } from "./CreateDeviceMessage";
 import { Log } from "../Log";
+import { CreateDeviceMessage } from "./CreateDeviceMessage";
 
 type Props = {
   surgeProtectors: SurgeProtector[];
@@ -44,8 +43,8 @@ export function ProfileSurgeProtectors({
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState(surgeProtectors ?? []);
   useEffect(() => {
-    if (rows.length == 0) setRows(surgeProtectors ?? [])
-  },[surgeProtectors])
+    if (rows.length == 0) setRows(surgeProtectors ?? []);
+  }, [surgeProtectors]);
   const [deviceModify, setDeviceModify] = useState({
     id: "",
     name: "",
@@ -68,8 +67,8 @@ export function ProfileSurgeProtectors({
   const [log, setLog] = useState<string[]>([]);
 
   useEffect(() => {
-    setDeviceModify({...deviceModify, userEmail: userEmail})
-  }, [userEmail])
+    setDeviceModify({ ...deviceModify, userEmail: userEmail });
+  }, [userEmail]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -168,8 +167,18 @@ export function ProfileSurgeProtectors({
       type: "string",
       hideable: false,
     },
-    { field: "name", headerName: "Name", width: fieldLength.get("name"), type: "string" },
-    { field: "type", headerName: "Type", width: fieldLength.get("type"), type: "string" },
+    {
+      field: "name",
+      headerName: "Name",
+      width: fieldLength.get("name"),
+      type: "string",
+    },
+    {
+      field: "type",
+      headerName: "Type",
+      width: fieldLength.get("type"),
+      type: "string",
+    },
     {
       field: "powerLoss",
       headerName: "Power Loss (W)",
@@ -182,13 +191,34 @@ export function ProfileSurgeProtectors({
       width: fieldLength.get("maxTemp"),
       type: "number",
     },
-    { field: "inputs", headerName: "Inputs", width: fieldLength.get("inputs"), type: "number" },
-    { field: "outputs", headerName: "Outputs", width: fieldLength.get("outputs"), type: "number" },
-    { field: "slots", headerName: "Slots", width: fieldLength.get("slots"), type: "number" },
-    { field: "link", headerName: "Link", width: fieldLength.get("link"), renderCell: (params) => (
-      <Link href={params.value} target="_blank">{params.value}</Link>
-    ) },
-    
+    {
+      field: "inputs",
+      headerName: "Inputs",
+      width: fieldLength.get("inputs"),
+      type: "number",
+    },
+    {
+      field: "outputs",
+      headerName: "Outputs",
+      width: fieldLength.get("outputs"),
+      type: "number",
+    },
+    {
+      field: "slots",
+      headerName: "Slots",
+      width: fieldLength.get("slots"),
+      type: "number",
+    },
+    {
+      field: "link",
+      headerName: "Link",
+      width: fieldLength.get("link"),
+      renderCell: (params) => (
+        <Link href={params.value} target="_blank">
+          {params.value}
+        </Link>
+      ),
+    },
   ];
 
   function checkCorrectFile(data: object) {
@@ -203,7 +233,7 @@ export function ProfileSurgeProtectors({
       "Inputs",
       "Outputs",
       "Slots",
-      "Link"
+      "Link",
     ];
     if (keys.length != 9) return false;
     const hasAllValues = keys.every((value) => expected.includes(value));
@@ -259,8 +289,8 @@ export function ProfileSurgeProtectors({
           `Surge protector "${device[id]}" has incorrect maximum temperature value`
         );
       }
-      if (!["B","C","D","B+C","B+C+D","C+D"].includes(device[type])) {
-        console.log(device[type])
+      if (!["B", "C", "D", "B+C", "B+C+D", "C+D"].includes(device[type])) {
+        console.log(device[type]);
         correct = false;
         tempLog.push(
           `Surge protector "${device[id]}" has incorrect type value`
@@ -268,15 +298,11 @@ export function ProfileSurgeProtectors({
       }
       if (String(device[id]).length > 10) {
         correct = false;
-        tempLog.push(
-          `Surge protector "${device[id]}" has id value too long`
-        );
+        tempLog.push(`Surge protector "${device[id]}" has id value too long`);
       }
       if (String(device[name]).length > 40) {
         correct = false;
-        tempLog.push(
-          `Surge protector"${device[id]}" has name value too long`
-        );
+        tempLog.push(`Surge protector"${device[id]}" has name value too long`);
       }
       if (correct) correcDevices.push(device);
     });
@@ -299,7 +325,6 @@ export function ProfileSurgeProtectors({
       ids.push(device[id]);
       return postSurgeProtector(variables);
     });
-    
 
     Promise.all(promises).then((results) => {
       setUploading(false);
@@ -364,7 +389,7 @@ export function ProfileSurgeProtectors({
         "Inputs",
         "Outputs",
         "Slots",
-        "Link"
+        "Link",
       ],
     };
     const csvExporter = new ExportToCsv(options);
@@ -374,7 +399,7 @@ export function ProfileSurgeProtectors({
   const [deleteResult, deleteSurgeProtector] =
     useDeleteSurgeProtectorMutation();
 
-//  if (uploading) return <CircularProgress></CircularProgress>;
+  //  if (uploading) return <CircularProgress></CircularProgress>;
 
   return (
     <>
@@ -415,7 +440,9 @@ export function ProfileSurgeProtectors({
               onChange={handleChange}
               sx={{ pr: 1, width: "30%" }}
               value={deviceModify.id}
-              InputProps={{ inputProps: { autoComplete: "off", maxLength: 10 } }}
+              InputProps={{
+                inputProps: { autoComplete: "off", maxLength: 10 },
+              }}
             />
             <TextField
               id="name"
@@ -425,7 +452,9 @@ export function ProfileSurgeProtectors({
               required
               onChange={handleChange}
               value={deviceModify.name}
-              InputProps={{ inputProps: { autoComplete: "off", maxLength: 40 } }}
+              InputProps={{
+                inputProps: { autoComplete: "off", maxLength: 40 },
+              }}
             />
           </div>
           <div className="section">
@@ -440,7 +469,7 @@ export function ProfileSurgeProtectors({
               value={deviceModify.type}
               SelectProps={{ native: true }}
             >
-              {["B","C","D","B+C","B+C+D","C+D"].map((input) => (
+              {["B", "C", "D", "B+C", "B+C+D", "C+D"].map((input) => (
                 <option key={input} value={input}>
                   {input}
                 </option>
@@ -537,8 +566,7 @@ export function ProfileSurgeProtectors({
               onChange={handleChange}
               value={deviceModify.link}
               type="string"
-              sx={{ width: '100%' }}
-            
+              sx={{ width: "100%" }}
             />
           </div>
           <Button
@@ -560,7 +588,7 @@ export function ProfileSurgeProtectors({
           onRowSelectionModelChange={(ids) => {
             setRowSelectionModel(ids);
           }}
-          loading = {surgeProtectors === undefined || uploading}
+          loading={surgeProtectors === undefined || uploading}
           slots={{ toolbar: GridToolbar }}
           density="compact"
         ></DataGrid>

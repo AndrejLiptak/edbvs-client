@@ -8,7 +8,7 @@ import {
   Link,
   Modal,
   TextField,
-  Typography
+  Typography,
 } from "@mui/material";
 import {
   DataGrid,
@@ -24,23 +24,27 @@ import {
   useDeleteGenericDeviceMutation,
   usePostGenericDeviceMutation,
 } from "../../../graphql/generated";
-import "../../../styles/main.css"
+import "../../../styles/main.css";
 import { allowedArray, fieldLength } from "../../../types";
-import { CreateDeviceMessage } from "./CreateDeviceMessage";
 import { Log } from "../Log";
+import { CreateDeviceMessage } from "./CreateDeviceMessage";
 
 type Props = {
   genericDevices: GenericDevice[];
   userEmail: string;
-  isAdmin: boolean
+  isAdmin: boolean;
 };
 
-export function ProfileGenericDevices({ genericDevices, userEmail, isAdmin }: Props) {
+export function ProfileGenericDevices({
+  genericDevices,
+  userEmail,
+  isAdmin,
+}: Props) {
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState(genericDevices ?? []);
   useEffect(() => {
-    if (rows.length == 0) setRows(genericDevices?? [])
-  },[genericDevices])
+    if (rows.length == 0) setRows(genericDevices ?? []);
+  }, [genericDevices]);
   const [deviceModify, setDeviceModify] = useState({
     id: "",
     name: "",
@@ -60,11 +64,10 @@ export function ProfileGenericDevices({ genericDevices, userEmail, isAdmin }: Pr
     useState<GridRowSelectionModel>([]);
   const [uploading, setUploading] = useState(false);
   const [log, setLog] = useState<string[]>([]);
-  
 
   useEffect(() => {
-    setDeviceModify({...deviceModify, userEmail: userEmail})
-  }, [userEmail])
+    setDeviceModify({ ...deviceModify, userEmail: userEmail });
+  }, [userEmail]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -75,11 +78,9 @@ export function ProfileGenericDevices({ genericDevices, userEmail, isAdmin }: Pr
   };
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
-
     event.preventDefault();
     setPosting(true);
     setSuccess(false);
-
 
     const variables = {
       ...deviceModify,
@@ -164,7 +165,12 @@ export function ProfileGenericDevices({ genericDevices, userEmail, isAdmin }: Pr
       type: "string",
       hideable: false,
     },
-    { field: "name", headerName: "Name", width: fieldLength.get("name"), type: "string" },
+    {
+      field: "name",
+      headerName: "Name",
+      width: fieldLength.get("name"),
+      type: "string",
+    },
     {
       field: "powerLoss",
       headerName: "Power Loss (W)",
@@ -177,12 +183,34 @@ export function ProfileGenericDevices({ genericDevices, userEmail, isAdmin }: Pr
       width: fieldLength.get("maxTemp"),
       type: "number",
     },
-    { field: "inputs", headerName: "Inputs", width: fieldLength.get("inputs"), type: "number" },
-    { field: "outputs", headerName: "Outputs", width: fieldLength.get("outputs"), type: "number" },
-    { field: "slots", headerName: "Slots", width: fieldLength.get("slots"), type: "number" },
-    { field: "link", headerName: "Link", width: fieldLength.get("link"), renderCell: (params) => (
-      <Link href={params.value} target="_blank">{params.value}</Link>
-    ) },
+    {
+      field: "inputs",
+      headerName: "Inputs",
+      width: fieldLength.get("inputs"),
+      type: "number",
+    },
+    {
+      field: "outputs",
+      headerName: "Outputs",
+      width: fieldLength.get("outputs"),
+      type: "number",
+    },
+    {
+      field: "slots",
+      headerName: "Slots",
+      width: fieldLength.get("slots"),
+      type: "number",
+    },
+    {
+      field: "link",
+      headerName: "Link",
+      width: fieldLength.get("link"),
+      renderCell: (params) => (
+        <Link href={params.value} target="_blank">
+          {params.value}
+        </Link>
+      ),
+    },
   ];
 
   function checkCorrectFile(data: object) {
@@ -253,15 +281,11 @@ export function ProfileGenericDevices({ genericDevices, userEmail, isAdmin }: Pr
       }
       if (String(device[id]).length > 10) {
         correct = false;
-        tempLog.push(
-          `Generic device "${device[id]}" has id value too long`
-        );
+        tempLog.push(`Generic device "${device[id]}" has id value too long`);
       }
       if (String(device[name]).length > 40) {
         correct = false;
-        tempLog.push(
-          `Generic device "${device[id]}" has name value too long`
-        );
+        tempLog.push(`Generic device "${device[id]}" has name value too long`);
       }
       if (correct) correcDevices.push(device);
     });
@@ -295,7 +319,7 @@ export function ProfileGenericDevices({ genericDevices, userEmail, isAdmin }: Pr
           succDevices.push(devices[index]);
         }
       });
-      
+
       setLog([...log, ...tempLog]);
       setRows([...rows, ...succDevices]);
     });
@@ -346,7 +370,7 @@ export function ProfileGenericDevices({ genericDevices, userEmail, isAdmin }: Pr
         "Inputs",
         "Outputs",
         "Slots",
-        "Link"
+        "Link",
       ],
     };
     const csvExporter = new ExportToCsv(options);
@@ -356,8 +380,6 @@ export function ProfileGenericDevices({ genericDevices, userEmail, isAdmin }: Pr
     usePostGenericDeviceMutation();
   const [deleteGenericDeviceResult, deleteGenericDevice] =
     useDeleteGenericDeviceMutation();
-
-
 
   return (
     <>
@@ -398,7 +420,9 @@ export function ProfileGenericDevices({ genericDevices, userEmail, isAdmin }: Pr
               sx={{ pr: 1, width: "30%" }}
               onChange={handleChange}
               value={deviceModify.id}
-              InputProps={{ inputProps: { autoComplete: "off", maxLength: 10 } }}
+              InputProps={{
+                inputProps: { autoComplete: "off", maxLength: 10 },
+              }}
             />
             <TextField
               id="name"
@@ -408,7 +432,9 @@ export function ProfileGenericDevices({ genericDevices, userEmail, isAdmin }: Pr
               sx={{ width: "68%" }}
               onChange={handleChange}
               value={deviceModify.name}
-              InputProps={{ inputProps: { autoComplete: "off", maxLength: 40 } }}
+              InputProps={{
+                inputProps: { autoComplete: "off", maxLength: 40 },
+              }}
             />
           </div>
           <div className="section">
@@ -505,8 +531,7 @@ export function ProfileGenericDevices({ genericDevices, userEmail, isAdmin }: Pr
               onChange={handleChange}
               value={deviceModify.link}
               type="string"
-              sx={{ width: '100%' }}
-            
+              sx={{ width: "100%" }}
             />
           </div>
           <Button
@@ -528,7 +553,7 @@ export function ProfileGenericDevices({ genericDevices, userEmail, isAdmin }: Pr
           onRowSelectionModelChange={(ids) => {
             setRowSelectionModel(ids);
           }}
-          loading = {genericDevices === undefined || uploading}
+          loading={genericDevices === undefined || uploading}
           slots={{ toolbar: GridToolbar }}
           density="compact"
         ></DataGrid>

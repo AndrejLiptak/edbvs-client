@@ -1,12 +1,10 @@
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
-import { IUsers } from "../../types";
-import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
+import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import { useEffect, useState } from "react";
 import {
   CompanyRequest,
   useApproveRequestMutation,
   useUserCompanyMutation,
-  useVerifyUserMutation,
 } from "../../graphql/generated";
 
 type Props = {
@@ -108,7 +106,7 @@ export function RequestGrid({ requests }: Props) {
         getRowId={(row) => row.userEmail}
         rows={rows}
         columns={columns}
-        loading = {requests === undefined}
+        loading={requests === undefined}
         density="compact"
         slots={{ toolbar: GridToolbar }}
       ></DataGrid>

@@ -1,4 +1,3 @@
-import { CircularProgress } from "@mui/material";
 import { useState } from "react";
 import "reactflow/dist/style.css";
 import {
@@ -10,8 +9,8 @@ import {
 } from "../../graphql/generated";
 import "../../styles/main.css";
 import { IDevice } from "../../types";
-import { Diagram } from "./diagram/Diagram";
 import { NavigationBar } from "../NavigationBar";
+import { Diagram } from "./diagram/Diagram";
 import { SidebarUnified } from "./sidebar/SidebarUnified";
 
 function Designer() {

@@ -1,7 +1,7 @@
-import { Handle, NodeProps, Position } from "reactflow";
-import { PhaseData } from "../../../../types";
-import "../../../../styles/deviceNode.css"
 import { Typography } from "@mui/material";
+import { Handle, NodeProps, Position } from "reactflow";
+import "../../../../styles/deviceNode.css";
+import { PhaseData } from "../../../../types";
 
 export function PhaseNode({ data }: NodeProps<PhaseData>) {
   return (

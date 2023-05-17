@@ -1,68 +1,28 @@
-import {
-  Edge,
-  Connection,
-  ReactFlowInstance,
-  Node,
-  NodeProps,
-} from "@reactflow/core";
-import {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import {
+import { Button } from "@mui/material";
+import { Connection, Edge, Node, ReactFlowInstance } from "@reactflow/core";
+import { SmartStepEdge } from "@tisoap/react-flow-smart-edge";
+import { ChangeEvent, useCallback, useMemo, useRef, useState } from "react";
+import ReactFlow, {
   Background,
   ConnectionLineType,
+  ConnectionMode,
   Controls,
-  ReactFlowProps,
   ReactFlowProvider,
   addEdge,
-  getConnectedEdges,
-  getOutgoers,
-  isEdge,
   useEdgesState,
   useNodesState,
-  useReactFlow,
 } from "reactflow";
-import VerifiedIcon from "@mui/icons-material/Verified";
-import {
-  DINData,
-  IDevice,
-  NodeData,
-  UserWithoutDevices,
-  nodeTypes,
-} from "../../../types";
-import ReactFlow from "reactflow";
-import "../../../styles/diagram.css";
 import "reactflow/dist/style.css";
-import { ConnectionMode } from "reactflow";
-import { UsedDevices } from "./UsedDevices";
-import { SmartStepEdge, SmartBezierEdge } from "@tisoap/react-flow-smart-edge";
-import { CustomNode, DeviceNode } from "./nodes/DeviceNode";
-import { PhaseNode } from "./nodes/PhaseNode";
-import {
-  Box,
-  Button,
-  Link,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  ListSubheader,
-  Modal,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { isNode } from "graphql/language/ast";
 import { Enclosure, useEnclosuresQuery } from "../../../graphql/generated";
-import { PhaseSelection } from "./PhaseSelection";
-import { DINNode } from "./nodes/DINNode";
+import "../../../styles/diagram.css";
+import { IDevice } from "../../../types";
 import { DownloadDocument, createPNG } from "./DownloadDocument";
 import { EnclosureSelection } from "./EnclosureSelection";
+import { PhaseSelection } from "./PhaseSelection";
+import { UsedDevices } from "./UsedDevices";
+import { DINNode } from "./nodes/DINNode";
+import { DeviceNode } from "./nodes/DeviceNode";
+import { PhaseNode } from "./nodes/PhaseNode";
 
 type Props = {
   deviceList: Map<IDevice, number>;

@@ -1,7 +1,8 @@
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import VerifiedIcon from "@mui/icons-material/Verified";
 import {
   Autocomplete,
   Box,
-  Button,
   IconButton,
   List,
   ListItem,
@@ -12,10 +13,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { IDevice, UserWithoutDevices } from "../../../types";
-import AddIcon from "@mui/icons-material/Add";
-import VerifiedIcon from "@mui/icons-material/Verified";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { useState } from "react";
 import {
   CircuitBreaker,
   GenericDevice,
@@ -23,13 +21,13 @@ import {
   Rcd,
   SurgeProtector,
 } from "../../../graphql/generated";
+import { IDevice } from "../../../types";
+import { DeviceDetail } from "../DeviceDetail";
 import { SidebarCircuit } from "./SidebarCircuit";
+import { SidebarGeneric } from "./SidebarGeneric";
+import { SidebarPLC } from "./SidebarPLC";
 import { SidebarRCD } from "./SidebarRCD";
 import { SidebarSurge } from "./SidebarSurge";
-import { SidebarPLC } from "./SidebarPLC";
-import { SidebarGeneric } from "./SidebarGeneric";
-import { DeviceDetail } from "../DeviceDetail";
-import { useState } from "react";
 
 type Props = {
   addToList: (device: IDevice) => void;

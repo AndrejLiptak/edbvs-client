@@ -145,7 +145,7 @@ export function DownloadDocument({
       },
       image: {
         border: `1px solid #000`,
-        margin: 10
+        margin: 10,
       },
     });
 

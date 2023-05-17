@@ -3,17 +3,21 @@ import { useState } from "react";
 import { ChromePicker } from "react-color";
 import { CustomNode } from "./nodes/DeviceNode";
 
-
 type Props = {
-    nodes: CustomNode[]
-    setNodes: (nodes: CustomNode[]) => void;
-    type: string;
-    setColorDevice: (color: string) => void;
-    colorInitial: string
-   
-}
+  nodes: CustomNode[];
+  setNodes: (nodes: CustomNode[]) => void;
+  type: string;
+  setColorDevice: (color: string) => void;
+  colorInitial: string;
+};
 
-export function ColorPicker({nodes, setNodes, type, setColorDevice, colorInitial} : Props) {
+export function ColorPicker({
+  nodes,
+  setNodes,
+  type,
+  setColorDevice,
+  colorInitial,
+}: Props) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [anchorElText, setAnchorElText] = useState<null | HTMLElement>(null);
 
@@ -39,25 +43,24 @@ export function ColorPicker({nodes, setNodes, type, setColorDevice, colorInitial
   const idText = openText ? "simple-popper" : undefined;
 
   const handleChange = (color: string) => {
-    setColorDevice(color)
+    setColorDevice(color);
 
-    setNodes(nodes.map((node) => {
-        if (node.data.device && node.data.device.__typename == type)
-        {
-            node.data = {
-                ...node.data,
-                color: color,
-              };
-              return node;
+    setNodes(
+      nodes.map((node) => {
+        if (node.data.device && node.data.device.__typename == type) {
+          node.data = {
+            ...node.data,
+            color: color,
+          };
+          return node;
         }
-        return node
-
-    }))
-    
-  }
+        return node;
+      })
+    );
+  };
 
   return (
-    <div style={{paddingRight: '10px'}}>
+    <div style={{ paddingRight: "10px" }}>
       <button
         aria-describedby={id}
         onClick={handleClick}
@@ -97,7 +100,6 @@ export function ColorPicker({nodes, setNodes, type, setColorDevice, colorInitial
           onChangeComplete={(color) => handleChange(color.hex)}
         ></ChromePicker>
       </Popover>
-
     </div>
   );
 }

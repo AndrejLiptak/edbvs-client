@@ -136,7 +136,7 @@ mutation PostCircuitBreaker(
   $maxTemp: Float!
   $userEmail: String!
   $isVerified: Boolean!
-   $link: String
+  $link: String
 ) {
   postCircuitBreaker(
     id: $id

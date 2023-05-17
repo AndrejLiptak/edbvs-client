@@ -6,7 +6,7 @@ import {
   Modal,
   Tab,
   Tabs,
-  Typography
+  Typography,
 } from "@mui/material";
 import { FormEvent, ReactNode, useState } from "react";
 import {
@@ -16,15 +16,15 @@ import {
   useUpdateRequestMutation,
   useUserQuery,
 } from "../../graphql/generated";
-import { CompanyRequestForm } from "./CompanyRequestForm";
+import "../../styles/main.css";
 import { NavigationBar } from "../NavigationBar";
-import { ProfilePLCs } from "./devices/ProfilePLCs";
-import { ProfileSurgeProtectors } from "./devices/ProfileSurgeProtectors";
-import "../../styles/main.css"
+import { CompanyRequestForm } from "./CompanyRequestForm";
 import { ProfileCircuitBreakers } from "./devices/ProfileCircuitBreaker";
 import { ProfileEnclosures } from "./devices/ProfileEnclosures";
 import { ProfileGenericDevices } from "./devices/ProfileGenericDevices";
+import { ProfilePLCs } from "./devices/ProfilePLCs";
 import { ProfileRCD } from "./devices/ProfileRCD";
+import { ProfileSurgeProtectors } from "./devices/ProfileSurgeProtectors";
 
 interface TabPanelProps {
   children?: ReactNode;
@@ -41,13 +41,11 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      style={{height: '100%'}}
+      style={{ height: "100%" }}
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3, pt: 0, height: '100%' }}>
-          {children}
-        </Box>
+        <Box sx={{ p: 3, pt: 0, height: "100%" }}>{children}</Box>
       )}
     </div>
   );
@@ -143,7 +141,7 @@ export function ProfilePage() {
   }
 
   return (
-    <div style={{height: '100%'}}>
+    <div style={{ height: "100%" }}>
       <NavigationBar />
       <div className="Profile">
         <Typography sx={{ mt: 4, mb: 2 }} variant="h4">
@@ -177,9 +175,11 @@ export function ProfilePage() {
             ></CompanyRequestForm>
           </>
         </Modal>
-        <Typography variant="h5" paddingTop={3}>My devices</Typography>
+        <Typography variant="h5" paddingTop={3}>
+          My devices
+        </Typography>
         <Box sx={{ width: "100%", height: "55%" }}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider", }}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs
               value={tab}
               onChange={handleTabChange}
@@ -201,42 +201,41 @@ export function ProfilePage() {
             />
           </TabPanel>
           <TabPanel value={tab} index={1}>
-          <ProfileRCD
-                RCDs={userData?.RCDs!}
-                userEmail={userData?.email!}
-                isAdmin={isAdmin}
-              />
+            <ProfileRCD
+              RCDs={userData?.RCDs!}
+              userEmail={userData?.email!}
+              isAdmin={isAdmin}
+            />
           </TabPanel>
           <TabPanel value={tab} index={2}>
-          <ProfileSurgeProtectors
-                surgeProtectors={userData?.surgeProtectors!}
-                userEmail={userData?.email!}
-                isAdmin={isAdmin}
-              />
+            <ProfileSurgeProtectors
+              surgeProtectors={userData?.surgeProtectors!}
+              userEmail={userData?.email!}
+              isAdmin={isAdmin}
+            />
           </TabPanel>
           <TabPanel value={tab} index={3}>
-          <ProfilePLCs
-                PLCs={userData?.PLCs!}
-                userEmail={userData?.email!}
-                isAdmin={isAdmin}
-              />
+            <ProfilePLCs
+              PLCs={userData?.PLCs!}
+              userEmail={userData?.email!}
+              isAdmin={isAdmin}
+            />
           </TabPanel>
           <TabPanel value={tab} index={4}>
-          <ProfileGenericDevices
-                genericDevices={userData?.genericDevices!}
-                userEmail={userData?.email!}
-                isAdmin={isAdmin}
-              />
+            <ProfileGenericDevices
+              genericDevices={userData?.genericDevices!}
+              userEmail={userData?.email!}
+              isAdmin={isAdmin}
+            />
           </TabPanel>
           <TabPanel value={tab} index={5}>
-          <ProfileEnclosures
-                enclosures={userData?.enclosures!}
-                userEmail={userData?.email!}
-                isAdmin={isAdmin}
-              />
+            <ProfileEnclosures
+              enclosures={userData?.enclosures!}
+              userEmail={userData?.email!}
+              isAdmin={isAdmin}
+            />
           </TabPanel>
         </Box>
-        
       </div>
     </div>
   );

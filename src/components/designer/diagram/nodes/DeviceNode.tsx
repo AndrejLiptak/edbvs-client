@@ -1,9 +1,7 @@
-import { Handle, Position, Node, NodeProps } from "reactflow";
-import { IDevice, NodeData } from "../../../../types";
-import { Divider, Typography } from "@mui/material";
-import "../../../../styles/deviceNode.css"
-
-import { useEffect } from "react";
+import { Typography } from "@mui/material";
+import { Handle, Node, NodeProps, Position } from "reactflow";
+import "../../../../styles/deviceNode.css";
+import { NodeData } from "../../../../types";
 
 type Props = {
   inputs: number;
@@ -13,7 +11,6 @@ type Props = {
 export type CustomNode = Node<NodeData>;
 
 export function DeviceNode({ data }: NodeProps<NodeData>) {
-
   function TopHandles({ inputs, width }: Props) {
     var handels = [];
     for (var i = 0; i < inputs; i++) {
@@ -59,7 +56,7 @@ export function DeviceNode({ data }: NodeProps<NodeData>) {
                 pl: `${spacing * (i + 1) - 10}px`,
                 position: "fixed",
                 fontSize: "10px",
-                bottom: '5px'
+                bottom: "5px",
               }}
             >
               {i + 1 <= data.device.digitalOut && `DI ${i + 1}`}
@@ -84,7 +81,6 @@ export function DeviceNode({ data }: NodeProps<NodeData>) {
     background: `${data.color}`,
     color: `#000`,
     //boxShadow: "0px 3px 10px rgba(0,0,0,0.25)",
-   
 
     width: `${data.device.slots * 60}px`,
     height: `${200}px`,
@@ -97,26 +93,61 @@ export function DeviceNode({ data }: NodeProps<NodeData>) {
       <TopHandles inputs={data.device.inputs} width={data.device.slots} />
 
       {data.device.__typename != "PLC" && (
-        <Typography align="center" sx={{ position: 'fixed', transform: `translate(-50%, -50%)`, top: '5%', left: '50%', fontSize: '10px',  }}>
+        <Typography
+          align="center"
+          sx={{
+            position: "fixed",
+            transform: `translate(-50%, -50%)`,
+            top: "5%",
+            left: "50%",
+            fontSize: "10px",
+          }}
+        >
           in
         </Typography>
       )}
 
-
-      <Typography align="center"  sx={{ position: 'relative', transform: `translate(-50%, -50%)`, top: '50%', left: '50%', fontSize: `12px`, wordWrap: "break-word" }}>
+      <Typography
+        align="center"
+        sx={{
+          position: "relative",
+          transform: `translate(-50%, -50%)`,
+          top: "50%",
+          left: "50%",
+          fontSize: `12px`,
+          wordWrap: "break-word",
+        }}
+      >
         {`${data.device.id}`}{" "}
       </Typography>
-      <Typography  align="center" sx={{ position: 'relative', transform: `translate(-50%, -50%)`, top: '50%', left: '50%', fontSize: `12px` }}>
+      <Typography
+        align="center"
+        sx={{
+          position: "relative",
+          transform: `translate(-50%, -50%)`,
+          top: "50%",
+          left: "50%",
+          fontSize: `12px`,
+        }}
+      >
         {`${data.order}`}{" "}
       </Typography>
 
-      
       {data.device.__typename != "PLC" && (
-        <Typography align="center" sx={{ position: 'fixed', transform: `translate(-50%, 50%)`, bottom: '5%', left: '50%', fontSize: '10px' }}>
+        <Typography
+          align="center"
+          sx={{
+            position: "fixed",
+            transform: `translate(-50%, 50%)`,
+            bottom: "5%",
+            left: "50%",
+            fontSize: "10px",
+          }}
+        >
           out
         </Typography>
       )}
-      
+
       <BottomHandles inputs={data.device.outputs} width={data.device.slots} />
     </div>
   );

@@ -1,27 +1,20 @@
-import DeleteIcon from "@mui/icons-material/Delete";
 import HelpIcon from "@mui/icons-material/Help";
 import WestIcon from "@mui/icons-material/West";
 import {
   Divider,
-  IconButton,
   List,
   ListItem,
-  ListItemButton,
   ListItemIcon,
   ListItemText,
   ListSubheader,
   Tooltip,
   Typography,
-  colors,
 } from "@mui/material";
 import Box from "@mui/material/Box";
-import { useState } from "react";
-import { ChromePicker } from "react-color";
 import { IDevice } from "../../../types";
-import { DeviceDetail } from "../DeviceDetail";
 import { ColorPicker } from "./ColorPicker";
-import { CustomNode } from "./nodes/DeviceNode";
 import { UsedDeviceItem } from "./UsedDevicesItem";
+import { CustomNode } from "./nodes/DeviceNode";
 
 type Props = {
   deviceList: Map<IDevice, number>;

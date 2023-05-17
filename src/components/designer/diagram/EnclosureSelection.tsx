@@ -1,3 +1,4 @@
+import VerifiedIcon from "@mui/icons-material/Verified";
 import {
   Box,
   Button,
@@ -12,10 +13,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Enclosure } from "../../../graphql/generated";
 import { ChangeEvent } from "react";
-import VerifiedIcon from "@mui/icons-material/Verified";
 import { Edge, Node, ReactFlowInstance, getConnectedEdges } from "reactflow";
+import { Enclosure } from "../../../graphql/generated";
 
 type Props = {
   enclosureModalOpen: boolean;

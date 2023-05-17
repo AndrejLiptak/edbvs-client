@@ -1,19 +1,17 @@
 import { Typography } from "@mui/material";
 
 type Props = {
-    error: boolean,
-    success: boolean,
-    id: string
-}
+  error: boolean;
+  success: boolean;
+  id: string;
+};
 
-export function CreateDeviceMessage({error, success, id}: Props) {
+export function CreateDeviceMessage({ error, success, id }: Props) {
   return (
     <>
       {error && (
         <div className="error">
-          <Typography>
-            Device with ID {id} already exists.
-          </Typography>
+          <Typography>Device with ID {id} already exists.</Typography>
         </div>
       )}
       {success && (

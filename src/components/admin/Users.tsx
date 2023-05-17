@@ -1,5 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
+import { useState } from "react";
+import { Navigate } from "react-router-dom";
 import {
   useCircuitBreakerQuery,
   useEnclosuresQuery,
@@ -16,12 +18,10 @@ import {
   useVerifyRcdMutation,
   useVerifySurgeMutation,
 } from "../../graphql/generated";
-import { RequestGrid } from "./CompanyRequests";
 import { NavigationBar } from "../NavigationBar";
+import { RequestGrid } from "./CompanyRequests";
 import { UsersGrid } from "./UsersGrid";
 import { AdminDevice } from "./adminDevices";
-import { useState } from "react";
-import { Navigate } from "react-router-dom";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -96,7 +96,7 @@ export function Users() {
   const genericDevices = useGenericDevicesQuery();
   const [postVerifyGenericResult, postVerifyGeneric] =
     useVerifyGenericMutation();
-  if (!isAdmin) return 	<Navigate to="/profile" />
+  if (!isAdmin) return <Navigate to="/profile" />;
   const users = usersInDb.data?.Users;
   const requests = requestsDB.data?.CompanyRequests;
 
@@ -104,7 +104,7 @@ export function Users() {
     <>
       <NavigationBar />
       <div className="Profile">
-        <Box sx={{ width: "100%", height: "90%", pt: 3}}>
+        <Box sx={{ width: "100%", height: "90%", pt: 3 }}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs
               value={tab}
@@ -126,57 +126,57 @@ export function Users() {
           </TabPanel>
           <TabPanel value={tab} index={1}>
             <RequestGrid
-              requests={requests?.filter(
-                (request) =>
-                  request.approved == false && request.rejected == false
-              )!}
+              requests={
+                requests?.filter(
+                  (request) =>
+                    request.approved == false && request.rejected == false
+                )!
+              }
             ></RequestGrid>
           </TabPanel>
           <TabPanel value={tab} index={2}>
-          <AdminDevice
-            devices={circuitBreakers[0].data?.CircuitBreakers!}
-            postDevice={postCircuitVerify}
-            type="CircuitBreaker"
-          />
+            <AdminDevice
+              devices={circuitBreakers[0].data?.CircuitBreakers!}
+              postDevice={postCircuitVerify}
+              type="CircuitBreaker"
+            />
           </TabPanel>
           <TabPanel value={tab} index={3}>
-          <AdminDevice
-            devices={rcds[0].data?.RCDs!}
-            postDevice={postRcdVerify}
-            type="RCD"
-          />
+            <AdminDevice
+              devices={rcds[0].data?.RCDs!}
+              postDevice={postRcdVerify}
+              type="RCD"
+            />
           </TabPanel>
           <TabPanel value={tab} index={4}>
-          <AdminDevice
-            devices={surgeProtectors[0].data?.SurgeProtectors!}
-            postDevice={postSurgeVerify}
-            type="SurgeProtector"
-          />
+            <AdminDevice
+              devices={surgeProtectors[0].data?.SurgeProtectors!}
+              postDevice={postSurgeVerify}
+              type="SurgeProtector"
+            />
           </TabPanel>
           <TabPanel value={tab} index={5}>
-          <AdminDevice
-            devices={plcs[0].data?.PLCs! ?? []}
-            postDevice={postPlcVerify}
-            type="PLC"
-          />
+            <AdminDevice
+              devices={plcs[0].data?.PLCs! ?? []}
+              postDevice={postPlcVerify}
+              type="PLC"
+            />
           </TabPanel>
           <TabPanel value={tab} index={6}>
-          <AdminDevice
-            devices={genericDevices[0].data?.GenericDevices!}
-            postDevice={postVerifyGeneric}
-            type="GenericDevice"
-          />
+            <AdminDevice
+              devices={genericDevices[0].data?.GenericDevices!}
+              postDevice={postVerifyGeneric}
+              type="GenericDevice"
+            />
           </TabPanel>
           <TabPanel value={tab} index={7}>
-          <AdminDevice
-            devices={enclosures[0].data?.Enclosures!}
-            postDevice={postEnclosureVerify}
-            type="Enclosure"
-          />
+            <AdminDevice
+              devices={enclosures[0].data?.Enclosures!}
+              postDevice={postEnclosureVerify}
+              type="Enclosure"
+            />
           </TabPanel>
         </Box>
-
-        
       </div>
     </>
   );

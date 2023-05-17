@@ -1,17 +1,17 @@
+import CloseIcon from "@mui/icons-material/Close";
 import {
-  Modal,
   Box,
-  List,
-  Typography,
-  ListItem,
   Button,
-  ListItemText,
-  IconButton,
   Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Modal,
+  Typography,
 } from "@mui/material";
 import { useState } from "react";
-import "../../styles/main.css"
-import CloseIcon from "@mui/icons-material/Close";
+import "../../styles/main.css";
 
 type Props = {
   log: string[];
@@ -27,13 +27,15 @@ export function Log({ log }: Props) {
           onClick={() => {
             setLogOpen(true);
           }}
-         
         >
           See log
         </Button>
       )}
       <Modal open={logOpen} onClose={() => setLogOpen(false)}>
-        <Box className="Log" sx={{display: 'flex', flexDirection: 'column', maxHeight: '50%'}}>
+        <Box
+          className="Log"
+          sx={{ display: "flex", flexDirection: "column", maxHeight: "50%" }}
+        >
           <Typography variant="h6">
             Log
             <IconButton
@@ -43,7 +45,7 @@ export function Log({ log }: Props) {
               <CloseIcon />
             </IconButton>
           </Typography>
-          <List sx={{flexGrow: 1, overflow: 'auto'}}>
+          <List sx={{ flexGrow: 1, overflow: "auto" }}>
             {log.map((logItem, index) => {
               return (
                 <>

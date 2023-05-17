@@ -23,10 +23,10 @@ import {
   useDeleteEnclosureMutation,
   usePostEnclosureMutation,
 } from "../../../graphql/generated";
-import "../../../styles/main.css"
+import "../../../styles/main.css";
 import { fieldLength } from "../../../types";
-import { CreateDeviceMessage } from "./CreateDeviceMessage";
 import { Log } from "../Log";
+import { CreateDeviceMessage } from "./CreateDeviceMessage";
 
 type Props = {
   enclosures: Enclosure[];
@@ -252,18 +252,13 @@ export function ProfileEnclosures({ enclosures, userEmail, isAdmin }: Props) {
       }
       if (String(device[id]).length > 10) {
         correct = false;
-        tempLog.push(
-          `Enclosure "${device[id]}" has id value too long`
-        );
+        tempLog.push(`Enclosure "${device[id]}" has id value too long`);
       }
       if (String(device[name]).length > 40) {
         correct = false;
-        tempLog.push(
-          `Enclosure "${device[id]}" has name value too long`
-        );
+        tempLog.push(`Enclosure "${device[id]}" has name value too long`);
       }
 
-      
       if (correct) correcDevices.push(device);
     });
 
@@ -394,7 +389,9 @@ export function ProfileEnclosures({ enclosures, userEmail, isAdmin }: Props) {
               required
               onChange={handleChange}
               value={enclosureModify.id}
-              InputProps={{ inputProps: { autoComplete: "off", maxLength: 10 } }}
+              InputProps={{
+                inputProps: { autoComplete: "off", maxLength: 10 },
+              }}
             />
             <TextField
               id="name"
@@ -404,7 +401,9 @@ export function ProfileEnclosures({ enclosures, userEmail, isAdmin }: Props) {
               required
               onChange={handleChange}
               value={enclosureModify.name}
-              InputProps={{ inputProps: { autoComplete: "off", maxLength: 40 } }}
+              InputProps={{
+                inputProps: { autoComplete: "off", maxLength: 40 },
+              }}
             />
           </div>
           <div className="section">

@@ -1,10 +1,13 @@
-import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 type Props = {
   handleOpen: (open: boolean) => void;
-  onSubmit:  (event: FormEvent<HTMLFormElement>, {companyName, companyICO} : {companyName: string, companyICO: string}) => void;
+  onSubmit: (
+    event: FormEvent<HTMLFormElement>,
+    { companyName, companyICO }: { companyName: string; companyICO: string }
+  ) => void;
 };
 
 export function CompanyRequestForm({ handleOpen, onSubmit }: Props) {
@@ -19,7 +22,11 @@ export function CompanyRequestForm({ handleOpen, onSubmit }: Props) {
     companyICO: "",
   });
   return (
-    <Box className="CreateBox" component="form" onSubmit={(event) => onSubmit(event, requestModify)}>
+    <Box
+      className="CreateBox"
+      component="form"
+      onSubmit={(event) => onSubmit(event, requestModify)}
+    >
       <Typography variant="h6">
         Company account request form
         <IconButton

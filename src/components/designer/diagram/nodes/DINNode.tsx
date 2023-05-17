@@ -1,7 +1,7 @@
-import { Handle, NodeProps, Position } from "reactflow";
-import { DINData, PhaseData } from "../../../../types";
-import "../../../../styles/deviceNode.css"
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import { NodeProps } from "reactflow";
+import "../../../../styles/deviceNode.css";
+import { DINData } from "../../../../types";
 
 export function DINNode({ data }: NodeProps<DINData>) {
   const width = data.slots * 60 + 35;

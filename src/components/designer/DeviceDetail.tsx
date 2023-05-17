@@ -7,39 +7,41 @@ import {
   Link,
   List,
   ListItem,
-  ListItemButton,
-  ListItemIcon,
   ListItemText,
   Modal,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { IDevice, UserWithoutDevices } from "../../types";
+import { IDevice } from "../../types";
 
 type Props = {
   device: IDevice;
   addToList: (device: IDevice) => void;
-  handleClose: (open: boolean) => void
+  handleClose: (open: boolean) => void;
   openIn: boolean;
 };
 
-export function DeviceDetail({ device, addToList, openIn, handleClose }: Props) {
+export function DeviceDetail({
+  device,
+  addToList,
+  openIn,
+  handleClose,
+}: Props) {
   const [open, setOpen] = useState(openIn);
   const email = device.userEmail;
   useEffect(() => {
-    setOpen(openIn)
-  },[openIn])
+    setOpen(openIn);
+  }, [openIn]);
 
   return (
     <>
-
       <Modal open={open} onClose={() => handleClose(false)}>
         <Box className={"CreateBox"}>
           <Typography variant="h6">
             {device.__typename}
             {device.isVerified && <VerifiedIcon color="primary" />}{" "}
             <IconButton
-              onClick={() =>handleClose(false)}
+              onClick={() => handleClose(false)}
               sx={{ position: "fixed", right: "5%" }}
             >
               <CloseIcon />
@@ -61,14 +63,7 @@ export function DeviceDetail({ device, addToList, openIn, handleClose }: Props) 
             <ListItem
               divider
               secondaryAction={
-                <Typography>
-                  {
-                    <>
-                      {device.userEmail}{" "}
-                      
-                    </>
-                  }
-                </Typography>
+                <Typography>{<>{device.userEmail} </>}</Typography>
               }
             >
               <ListItemText primary={"Created by:"} />
@@ -117,10 +112,12 @@ export function DeviceDetail({ device, addToList, openIn, handleClose }: Props) 
                 <ListItemText primary={"Break time type:"} />
               </ListItem>
             )}
-                        {"breakTimeType" in device && (
+            {"breakTimeType" in device && (
               <ListItem
                 divider
-                secondaryAction={<Typography>{device.breakTimeType}</Typography>}
+                secondaryAction={
+                  <Typography>{device.breakTimeType}</Typography>
+                }
               >
                 <ListItemText primary={"Type:"} />
               </ListItem>
@@ -161,7 +158,11 @@ export function DeviceDetail({ device, addToList, openIn, handleClose }: Props) 
             </ListItem>
             <ListItem
               divider
-              secondaryAction={<Link href={device.link!} target="_blank">{device.id}</Link>}
+              secondaryAction={
+                <Link href={device.link!} target="_blank">
+                  {device.id}
+                </Link>
+              }
             >
               <ListItemText primary={"Link:"} />
             </ListItem>
@@ -173,7 +174,7 @@ export function DeviceDetail({ device, addToList, openIn, handleClose }: Props) 
               handleClose(false);
             }}
           >
-           <AddCircleOutlineIcon color="success" fontSize="large" />
+            <AddCircleOutlineIcon color="success" fontSize="large" />
           </IconButton>
         </Box>
       </Modal>

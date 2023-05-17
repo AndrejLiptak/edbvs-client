@@ -25,10 +25,10 @@ import {
   useDeleteCircuitBreakerMutation,
   usePostCircuitBreakerMutation,
 } from "../../../graphql/generated";
-import "../../../styles/main.css"
-import { CreateDeviceMessage } from "./CreateDeviceMessage";
-import { Log } from "../Log";
+import "../../../styles/main.css";
 import { fieldLength } from "../../../types";
+import { Log } from "../Log";
+import { CreateDeviceMessage } from "./CreateDeviceMessage";
 
 type Props = {
   circuitBreakers: CircuitBreaker[];
@@ -294,7 +294,6 @@ export function ProfileCircuitBreakers({
         tempLog.push(
           `Circuit breaker "${device[id]}" has incorrect pole count value`
         );
-        
       }
       if (!["B", "C", "D"].includes(device[type])) {
         correct = false;
@@ -322,17 +321,13 @@ export function ProfileCircuitBreakers({
       }
       if (String(device[id]).length > 10) {
         correct = false;
-        tempLog.push(
-          `Circuit breaker "${device[id]}" has id value too long`
-        );
+        tempLog.push(`Circuit breaker "${device[id]}" has id value too long`);
       }
       if (String(device[name]).length > 40) {
         correct = false;
-        tempLog.push(
-          `Circuit breaker "${device[id]}" has name value too long`
-        );
+        tempLog.push(`Circuit breaker "${device[id]}" has name value too long`);
       }
-      
+
       if (correct) correcDevices.push(device);
     });
 
@@ -504,7 +499,9 @@ export function ProfileCircuitBreakers({
               value={deviceModify.id}
               className="id"
               sx={{ pr: 1 }}
-              InputProps={{ inputProps: { autoComplete: "off", maxLength: 10  } }}
+              InputProps={{
+                inputProps: { autoComplete: "off", maxLength: 10 },
+              }}
             />
             <TextField
               id="name"
@@ -514,7 +511,9 @@ export function ProfileCircuitBreakers({
               onChange={handleChange}
               value={deviceModify.name}
               className="name"
-              InputProps={{ inputProps: { autoComplete: "off", maxLength: 40 } }}
+              InputProps={{
+                inputProps: { autoComplete: "off", maxLength: 40 },
+              }}
             />
           </div>
           <div className="section">

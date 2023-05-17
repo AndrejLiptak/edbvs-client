@@ -2,7 +2,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Collapse, ListItemButton, ListItemText } from "@mui/material";
 import { useState } from "react";
 import { CircuitBreaker } from "../../../graphql/generated";
-import { IDevice, UserWithoutDevices } from "../../../types";
+import { IDevice } from "../../../types";
 import { SidebarPole } from "./SidebarCircuitPole";
 
 type Props = {
@@ -48,37 +48,31 @@ export function SidebarCircuit({ circuitBreakers, addToList }: Props) {
           addToList={addToList}
           circuitBreakers={pole1}
           poles="1 Pole"
-
         ></SidebarPole>
         <SidebarPole
           addToList={addToList}
           circuitBreakers={pole1n}
           poles="1+N Pole"
- 
         ></SidebarPole>
         <SidebarPole
           addToList={addToList}
           circuitBreakers={pole2}
           poles="2 Pole"
-        
         ></SidebarPole>
         <SidebarPole
           addToList={addToList}
           circuitBreakers={pole3}
           poles="3 Pole"
-        
         ></SidebarPole>
         <SidebarPole
           addToList={addToList}
           circuitBreakers={pole3n}
           poles="3+N Pole"
-        
         ></SidebarPole>
         <SidebarPole
           addToList={addToList}
           circuitBreakers={pole4}
           poles="4 Pole"
-          
         ></SidebarPole>
       </Collapse>
     </div>
